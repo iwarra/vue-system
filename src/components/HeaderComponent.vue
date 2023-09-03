@@ -7,7 +7,7 @@ import { ref } from 'vue';
 
 const logoLink = logo;
 const userAvatarLink = userAvatar;
-let showDropdown = ref(true);
+let showDropdown = ref(false);
 const userStore = useUserStore();
 
 function closeDropdown() {
@@ -17,7 +17,6 @@ function closeDropdown() {
 function toggleDropdown() {
   showDropdown.value = !showDropdown.value;
 };
-
 </script>
 
 <template>

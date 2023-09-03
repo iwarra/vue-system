@@ -4,12 +4,12 @@
 
   const userStore = useUserStore();
   function handleLogOut() {
-      userStore.resetUsername();
-      userStore.setLogIn(false);
-      //close the menu on log out
-      localStorage.removeItem("user");
-      emit("close");
-    };
+    userStore.resetUsername();
+    userStore.setLogIn(false);
+    //close the menu on log out
+    localStorage.removeItem("user");
+    emit("close");
+  };
 </script>
 
 <template>

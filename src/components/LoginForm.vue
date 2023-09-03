@@ -1,11 +1,40 @@
 <script setup>
-    function handleSubmit() {
-      // Check errors 
-      // Create user object
-      // Add info to store
-      // Add info to local storage
-      // reset
-    }
+import { ref } from 'vue';
+import { useUserStore } from "../stores/user";
+
+const userStore = useUserStore();
+const username = ref('');
+const password = ref('');
+const errorName = ref('');
+const errorPassword = ref('');
+
+function handleSubmit() {
+  if (username.value.trim() === "") {
+    errorName.value = "You need to enter your name!";
+    ref.nameInput.focus();
+    return;
+  }
+  if (password.value.trim() === "") {
+    errorPassword.value = "You need to enter your password!";
+    ref.passwordInput.focus();
+    return;
+  }
+
+  const user = {
+    username: username.value,
+    password: password.value,
+  };
+
+  userStore.setLogIn(true);
+  userStore.setCurrentUser(user.username);
+  localStorage.setItem("user", JSON.stringify(user));
+  console.log(user);
+
+  username.value = "";
+  password.value = "";
+  errorName.value = "";
+  errorPassword.value = "";
+}   
 </script>
 
 <template>
