@@ -9,9 +9,7 @@ const loadingStore = useLoadingStore();
     <template v-if="loadingStore.isLoading">
       <LoadingSpinner />
     </template>
-    <template v-else>
-      <router-view />
-    </template>
+    <router-view />
   </div>
 </template>
 

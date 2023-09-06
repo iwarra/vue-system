@@ -1,12 +1,10 @@
 <script setup>
-    
+import ReportChart from "../components/ReportChart.vue";
 </script>
 
 <template>
-    <h1>Report view</h1>
+    <ReportChart />
 </template>
 
 
-<style scoped>
-
-</style>
+<style scoped></style>

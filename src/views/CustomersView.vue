@@ -1,12 +1,9 @@
 <script setup>
-    
+    import CustomersList from '../components/CustomersList.vue';
 </script>
 
 <template>
-    <h1>Customers view</h1>
+    <CustomersList />
 </template>
 
-
-<style scoped>
-
-</style>
+<style scoped></style>

@@ -7,17 +7,13 @@ export async function fetchData(endpoint, dataHolder) {
   try {
     console.log('Fetching...')
     const BASE_URL = "https://startdeliver-mock-api.glitch.me/";
-    const response = await fetch(`${BASE_URL}${endpoint}`);
+    const response = await fetch(BASE_URL + endpoint);
     const responseData = await response.json();
+    dataHolder.length = 0;
 
-    if (endpoint === "report") {
-      dataHolder.length = 0;
-      dataHolder.push(...responseData.data);
-      console.log("report data", dataHolder);
-    } else {
-      dataHolder.length = 0;
-      dataHolder.push(...responseData);
-    }
+    endpoint === "customer" ? dataHolder.push(...responseData) : dataHolder.push(...responseData.data);
+    
+    console.log('Fetched data:', dataHolder)
   } catch (error) {
     console.log(`Error fetching ${endpoint} data:`, error);
   } finally {
