@@ -5,7 +5,7 @@
 </script>
 
 <template>
-  <div>
+  <div class="container">
     <h1>Welcome to your page!</h1>
     <hr>
     <p>Username: {{ username }}</p>
@@ -14,4 +14,15 @@
   </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+.container {
+  height: 100vh;
+}
+hr {
+  margin-bottom: 20px;
+}
+p {
+  font-size: 18px;
+  margin: 10px 0 10px 0;
+}
+</style>

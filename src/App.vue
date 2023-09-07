@@ -4,6 +4,8 @@ import HomePage from './components/HomePage.vue';
 import LoginForm from "./components/LoginForm.vue";
 import { onMounted } from 'vue';
 import { useUserStore } from "./stores/user";
+import { useThemesStore } from "./stores/themes";
+const themesStore = useThemesStore();
 const userStore = useUserStore();
 
 function autoLogin(user) {
@@ -20,17 +22,28 @@ onMounted(() => {
 });
 </script>
 
-<template>
-   <HeaderComponent />
+<template >
+  <div :class="[themesStore.theme === 'light' ? 'light-theme' : 'dark-theme']">
+    <HeaderComponent />
     <LoginForm v-if="!userStore.isLoggedIn"/>
     <HomePage v-else/>
+  </div>
 </template>
 
-<style scoped>
+<style>
 #app {
-  font-family: "IBM Plex Sans", sans-serif;
+  font-family: "Source Sans Pro";
+}
+.light-theme {
+  background-color: #ffffff;
+  color: #333333;
+}
+.dark-theme {
+  background-color: #333333;
+  color: #ffffff;
 }
 h1 {
   font-weight: normal;
+  font-size: 45px;
 }
 </style>

@@ -3,7 +3,14 @@
 </script>
 
 <template>
-    <CustomersList />
+    <div class="container">
+        <CustomersList />
+    </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+.container {
+  min-height: 100vh;
+  height: 100%;
+}
+</style>

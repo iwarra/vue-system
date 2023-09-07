@@ -1,6 +1,8 @@
 <script setup>
-  import { useUserStore } from "../stores/user";
-  const emit = defineEmits(['close']);
+import { useThemesStore } from "../stores/themes";
+import { useUserStore } from "../stores/user";
+const emit = defineEmits(['close']);
+const themesStore = useThemesStore();
 
   const userStore = useUserStore();
   const username = userStore.getUsername; 
@@ -15,7 +17,7 @@
 </script>
 
 <template>
-  <div class="wrapper">
+  <div :class="[themesStore.theme === 'light' ? 'wrapper' : 'dark']">
     <ul class="dropdown-nav">
       <li class="dropdown-item">
         <router-link 
@@ -58,17 +60,24 @@
   </div>
 </template>
 
-
 <style  scoped>
+.dark {
+  background-color: #333333;;
+  color: white;
+  border: 1px solid rgb(120, 120, 120);
+}
+.wrapper {
+   position: relative; 
+   z-index: 1;
+   background-color: white;
+   border: 1px solid #ccc;
+}
+
 ul {
   list-style: none;
 }
 a {
   text-decoration: none;
-}
-.dropdown-svg {
-  width: 1.5rem;
-  height: 1.5rem;
 }
 .dropdown-link {
   display: flex;
@@ -77,12 +86,12 @@ a {
   align-items: center;
   justify-content: flex-start;
   color: #5b6791b2;
-  padding: 1rem 1.5rem 0 1.5rem;
+  padding: .5rem 1.5rem .8rem 1.5rem;
   cursor: not-allowed;
   pointer-events: none;
 }
 .active {
-  color: #2050fe;
+  color: rgb(4, 188, 220);
   cursor: pointer;
   pointer-events: auto;
 }

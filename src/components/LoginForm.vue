@@ -38,7 +38,7 @@ function handleSubmit() {
 </script>
 
 <template>
-  <div>
+  <div class="container">
     <h1>Please log in</h1>
     <form class="login-form" @submit.prevent="handleSubmit">
       <label for="name">Username:</label>
@@ -59,6 +59,10 @@ function handleSubmit() {
 
 
 <style  scoped>
+.container {
+  height: 100vh;
+}
+
 h1 {
   text-align: center;
   font-weight: normal;

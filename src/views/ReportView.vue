@@ -3,8 +3,14 @@ import ReportChart from "../components/ReportChart.vue";
 </script>
 
 <template>
-    <ReportChart />
+    <div class="container">
+      <ReportChart />
+    </div>
 </template>
 
 
-<style scoped></style>
+<style scoped>
+.container {
+  height: 100vh;
+}
+</style>

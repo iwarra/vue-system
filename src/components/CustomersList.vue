@@ -2,7 +2,10 @@
 import { ref, computed, onMounted } from "vue";
 import { fetchData } from "../controller/getData.js";
 import { useCustomerStore } from "../stores/customer";
+import LoadingSpinner from './LoadingSpinner.vue';
+import { useLoadingStore } from "../stores/loading";
 
+const loadingStore = useLoadingStore();
 let items = ref([]);
 let filter = ref('');
 
@@ -37,7 +40,8 @@ onMounted(() => {fetchData('customer', items.value )});
       placeholder="Search..."
     />
   </div>
-    <table>
+  <LoadingSpinner v-if="loadingStore.isLoading" />
+    <table v-else>
       <thead>
         <tr>
           <th>Name</th>
@@ -67,9 +71,61 @@ onMounted(() => {fetchData('customer', items.value )});
 </template>
 
 <style  scoped>
+table {
+  font-family: Source Sans Pro;
+	width:100%;
+  border-collapse: collapse; 
+}
+
+.customer-header input {
+  margin-bottom: 44px;
+}
+
+tbody {
+  font-size: 18px;
+}
+
+table tr td {
+  border: none;
+  border-left: 0;
+  border-right: 0;
+  white-space: nowrap;
+}
+
+th {
+  color: #67d5e8;
+  padding: 10px;
+  font-size: 21px;
+  font-weight: 600;
+  background-color: #5d5d5d;
+  border-bottom: solid 2px #d8d8d8;
+  position: sticky;
+  top: 0;
+}
+
+td {
+  padding: 4px 0px 4px 10px;
+}
+
+.table-name a {
+  text-decoration: none;
+  color: grey;
+}
+
+tbody tr {
+  transition: background-color 150ms ease-out;
+  &:nth-child(2n) {
+    background-color:#e1e1e1;
+  }
+  &:hover {
+    background-color: #c4c4c4;
+  }
+}
+
  .customer-header {
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
   align-items: end;
   justify-content: space-between;
 } 
@@ -78,15 +134,9 @@ th {
   text-align: start;
 }
 
-.table-name,
-.table-arr {
-  padding-right: 100px;
-} 
-
 .customers-filter {
   height: 24px;
-  max-width: 200px;
-  margin-bottom: 20px;
+  min-width: 200px;
   padding-left: 5px;
 }
 </style>

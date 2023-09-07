@@ -1,14 +1,7 @@
-<script setup>
-import LoadingSpinner from './LoadingSpinner.vue';
-import { useLoadingStore } from "../stores/loading";
-const loadingStore = useLoadingStore();
-</script>
+<script setup></script>
 
 <template>
   <div class="hello">
-    <template v-if="loadingStore.isLoading">
-      <LoadingSpinner />
-    </template>
     <router-view />
   </div>
 </template>
@@ -17,5 +10,6 @@ const loadingStore = useLoadingStore();
 .hello {
   max-width: 80vw;
   margin: 0 auto;
+  height: 100%;
 }
 </style>
