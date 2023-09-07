@@ -114,7 +114,7 @@ img {
 
 button {
   padding: 3px 6px;
-  background-color: #dddfe8;
+  background-color: #eee;
   border: 1px solid #02b0cd;
   border-radius: 5px;
 }

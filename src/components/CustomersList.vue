@@ -90,6 +90,7 @@ table tr td {
   border-left: 0;
   border-right: 0;
   white-space: nowrap;
+  color: grey;
 }
 
 th {
@@ -114,12 +115,13 @@ td {
 
 tbody tr {
   transition: background-color 150ms ease-out;
-  &:nth-child(2n) {
-    background-color:#e1e1e1;
-  }
-  &:hover {
-    background-color: #c4c4c4;
-  }
+  background-color: #f8f6f6;
+}
+tbody tr:nth-child(2n) {
+  background-color:#dcdbdb;
+}
+tbody tr:hover {
+  background-color: #cac9c9;
 }
 
  .customer-header {
@@ -135,7 +137,7 @@ th {
 }
 
 .customers-filter {
-  height: 24px;
+  height: 26px;
   min-width: 200px;
   padding-left: 5px;
 }

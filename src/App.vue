@@ -1,8 +1,8 @@
 <script setup>
 import HeaderComponent from "./components/HeaderComponent.vue";
-import HomePage from './components/HomePage.vue';
+import HomePage from "./components/HomePage.vue";
 import LoginForm from "./components/LoginForm.vue";
-import { onMounted } from 'vue';
+import { onMounted } from "vue";
 import { useUserStore } from "./stores/user";
 import { useThemesStore } from "./stores/themes";
 const themesStore = useThemesStore();
