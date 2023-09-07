@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
 import ReportView from "../views/ReportView.vue";
 import CustomersView from "../views/CustomersView.vue";
+import UserView from "../views/UserView.vue";
 import SingleCustomerView from "../views/SingleCustomerView.vue";
 import { useUserStore } from "../stores/user";
 
@@ -19,6 +20,11 @@ const routes = [
     path: "/customer/:id",
     name: "SingleCustomerView",
     component: SingleCustomerView
+  },
+  {
+    path: "/:username",
+    name: "UserView",
+    component: UserView
   }
 ];
 

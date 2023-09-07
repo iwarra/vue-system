@@ -48,16 +48,16 @@ function toggleDropdown() {
           <p class="user-title">Guest</p>
         </div>
         <div>
-          <span @click="toggleDropdown" v-if="!showDropdown">
-            &#9660;
-          </span>
-          <span
-            class="close-btn"
+          <mdicon 
+            v-if="!showDropdown"
+            @click="toggleDropdown"
+            name="triangle-down-outline"
+            size="15" />
+          <mdicon 
             v-if="showDropdown"
             @click="toggleDropdown"
-          >
-            x
-          </span>
+            name="triangle-outline"
+            size="15" />
         </div>
       </div>
     </header>
@@ -131,11 +131,6 @@ hr {
   font-weight: 600;
   color: #2050fe;
   text-decoration: underline;
-}
-.close-btn {
-  font-weight: 600;
-  font-size: 1.2em;
-  width: 15px;
 }
 @media (max-width: 560px) {
   .user-avatar {
