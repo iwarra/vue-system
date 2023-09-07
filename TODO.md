@@ -1,6 +1,3 @@
-* Submit logic for the log in form
-* Logic to fetch data from API
-* A chart with chart.js
-* Display customers as a list 
-* Make each customer clickable
+* Add icons to header
+* Make a simple page for a user to see their basic info
 * Styling
