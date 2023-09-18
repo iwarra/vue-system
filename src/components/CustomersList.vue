@@ -26,6 +26,16 @@ const filteredItems = computed(() => {
   })
 });
 
+function sortCustomers(columnNr) {
+  console.log(table.tBodies[0].rows)
+  let sortedRows = Array.from(table.tBodies[0].rows) 
+    .sort((rowA, rowB) => 
+      rowA.cells[columnNr].innerText.localeCompare(rowB.cells[columnNr].innerText)
+    );
+
+  table.tBodies[0].append(...sortedRows);
+}
+
 onMounted(() => {fetchData('customer', items.value )});
 </script>
 
@@ -41,12 +51,33 @@ onMounted(() => {fetchData('customer', items.value )});
     />
   </div>
   <LoadingSpinner v-if="loadingStore.isLoading" />
-    <table v-else>
+    <table id="table" v-else>
       <thead>
         <tr>
-          <th>Name</th>
-          <th>Arr</th>
-          <th>ID</th>
+          <th>Name
+            <mdicon 
+              @click="sortCustomers(0)"
+              class="arrow-icon"
+              name="arrow-down"
+              size="18" 
+            />
+          </th>
+          <th>Arr
+            <mdicon 
+              @click="sortCustomers(1)"
+              class="arrow-icon"
+              name="arrow-down"
+              size="18" 
+            />
+          </th>
+          <th>ID
+            <mdicon 
+              @click="sortCustomers(2)"
+              class="arrow-icon"
+              name="arrow-down"
+              size="18" 
+            />
+          </th>
         </tr>
       </thead>
       <tbody>
