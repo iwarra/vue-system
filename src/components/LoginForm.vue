@@ -28,7 +28,6 @@ function handleSubmit() {
   userStore.setLogIn(true);
   userStore.setCurrentUser(user.username);
   localStorage.setItem("user", JSON.stringify(user));
-  console.log(user);
 
   username.value = "";
   password.value = "";
