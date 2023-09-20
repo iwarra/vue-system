@@ -67,32 +67,26 @@ onMounted(() => { fetchData('customer', items.value ) });
     <table id="table" v-else>
       <thead>
         <tr>
-          <th>
+          <th @click="sortCustomers(0)"> Name
             <mdicon 
-              @click="sortCustomers(0)"
-              class="arrow-icon"
-              :name="sortingDirections[0] ? 'arrow-up' : 'arrow-down'"
-              size="20" 
+              class="sorting-icon"
+              :name="sortingDirections[0] ? 'triangle-small-up' : 'triangle-small-down'"
+              size="25" 
             />
-            Name
           </th>
-          <th>
+          <th @click="sortCustomers(1)"> Arr
             <mdicon 
-              @click="sortCustomers(1)"
-              class="arrow-icon"
-              :name="sortingDirections[1] ? 'arrow-up' : 'arrow-down'"
-              size="20" 
+              class="sorting-icon"
+              :name="sortingDirections[1] ? 'triangle-small-up' : 'triangle-small-down'"
+              size="25" 
             />
-            Arr
           </th>
-          <th>
+          <th @click="sortCustomers(2)"> ID
             <mdicon 
-              @click="sortCustomers(2)"
-              class="arrow-icon"
-              :name="sortingDirections[2] ? 'arrow-up' : 'arrow-down'"
-              size="20" 
+              class="sorting-icon"
+              :name="sortingDirections[2] ? 'triangle-small-up' : 'triangle-small-down'"
+              size="25" 
             />
-            ID
           </th>
         </tr>
       </thead>
@@ -188,5 +182,4 @@ th {
   min-width: 200px;
   padding-left: 5px;
 }
-
 </style>
