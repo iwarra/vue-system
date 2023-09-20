@@ -8,6 +8,7 @@ import { useLoadingStore } from "../stores/loading";
 const loadingStore = useLoadingStore();
 let items = ref([]);
 let filter = ref('');
+let sortingDirections = ref(new Array(3).fill(null));
 
 function navigateAndSendData(data) {
   const customerStore = useCustomerStore();
@@ -27,16 +28,28 @@ const filteredItems = computed(() => {
 });
 
 function sortCustomers(columnNr) {
-  console.log(table.tBodies[0].rows)
+  sortingDirections.value[columnNr] = !sortingDirections.value[columnNr];
+  let ascending = sortingDirections.value[columnNr]
+
   let sortedRows = Array.from(table.tBodies[0].rows) 
-    .sort((rowA, rowB) => 
-      rowA.cells[columnNr].innerText.localeCompare(rowB.cells[columnNr].innerText)
-    );
+    .sort((rowA, rowB) => {
+      const cellA = rowA.cells[columnNr].innerText;
+      const cellB = rowB.cells[columnNr].innerText;
+
+      const numA = parseFloat(cellA);
+      const numB = parseFloat(cellB);
+
+      if (!isNaN(numA) && !isNaN(numB)) {
+        return ascending ? numA - numB : numB - numA;
+      } else {
+        return ascending ? cellA.localeCompare(cellB) : cellB.localeCompare(cellA);
+      }
+    });
 
   table.tBodies[0].append(...sortedRows);
 }
 
-onMounted(() => {fetchData('customer', items.value )});
+onMounted(() => { fetchData('customer', items.value ) });
 </script>
 
 <template>
@@ -54,29 +67,32 @@ onMounted(() => {fetchData('customer', items.value )});
     <table id="table" v-else>
       <thead>
         <tr>
-          <th>Name
+          <th>
             <mdicon 
               @click="sortCustomers(0)"
               class="arrow-icon"
-              name="arrow-down"
-              size="18" 
+              :name="sortingDirections[0] ? 'arrow-up' : 'arrow-down'"
+              size="20" 
             />
+            Name
           </th>
-          <th>Arr
+          <th>
             <mdicon 
               @click="sortCustomers(1)"
               class="arrow-icon"
-              name="arrow-down"
-              size="18" 
+              :name="sortingDirections[1] ? 'arrow-up' : 'arrow-down'"
+              size="20" 
             />
+            Arr
           </th>
-          <th>ID
+          <th>
             <mdicon 
               @click="sortCustomers(2)"
               class="arrow-icon"
-              name="arrow-down"
-              size="18" 
+              :name="sortingDirections[2] ? 'arrow-up' : 'arrow-down'"
+              size="20" 
             />
+            ID
           </th>
         </tr>
       </thead>
@@ -172,4 +188,5 @@ th {
   min-width: 200px;
   padding-left: 5px;
 }
+
 </style>
