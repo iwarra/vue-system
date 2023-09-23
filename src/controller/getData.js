@@ -12,8 +12,6 @@ export async function fetchData(endpoint, dataHolder) {
     dataHolder.length = 0;
 
     endpoint === "customer" ? dataHolder.push(...responseData) : dataHolder.push(...responseData.data);
-    
-    console.log('Fetched data:', dataHolder)
   } catch (error) {
     console.log(`Error fetching ${endpoint} data:`, error);
   } finally {

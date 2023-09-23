@@ -10,5 +10,10 @@ export const useThemesStore = defineStore({
       console.log("Toggling theme...");
       this.theme = this.theme === 'light' ? 'dark' : 'light';
     },
+  },
+  getters: {
+    getTheme() {
+      return this.theme;
+    },
   }
 })
