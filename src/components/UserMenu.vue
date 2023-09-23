@@ -2,7 +2,7 @@
 import { useThemesStore } from "../stores/themes";
 import { useUserStore } from "../stores/user";
 const emit = defineEmits(['close']);
-const themesStore = useThemesStore();
+const themeStore = useThemesStore();
 
   const userStore = useUserStore();
   const username = userStore.getUsername; 
@@ -17,8 +17,16 @@ const themesStore = useThemesStore();
 </script>
 
 <template>
-  <div :class="[themesStore.theme === 'light' ? 'wrapper' : 'dark']">
+  <div :class="[themeStore.getTheme === 'light' ? 'wrapper' : 'dark']">
     <ul class="dropdown-nav">
+      <li class="dropdown-item">
+        <div class="dropdown-link active">
+          <mdicon 
+              :name="themeStore.getTheme === 'light'? 'toggle-switch-off-outline' : 'toggle-switch-outline'"
+              size="18" />
+          <span @click="themeStore.toggleTheme">Toggle Theme</span>
+        </div>
+      </li>
       <li class="dropdown-item">
         <router-link 
           :to="{
@@ -65,6 +73,7 @@ const themesStore = useThemesStore();
   background-color: #333333;;
   color: white;
   border: 1px solid rgb(120, 120, 120);
+  z-index: 1;
 }
 .wrapper {
    position: relative; 

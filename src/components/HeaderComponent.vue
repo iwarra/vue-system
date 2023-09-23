@@ -1,7 +1,6 @@
 <script setup>
 import UserMenu from './UserMenu.vue';
 import { useUserStore } from "../stores/user";
-import { useThemesStore } from '../stores/themes';
 import logo2 from '../assets/logo2.png';
 import userAvatar from '../assets/user-avatar.png';
 import { ref } from 'vue';
@@ -10,7 +9,6 @@ const logoLink = logo2;
 const userAvatarLink = userAvatar;
 let showDropdown = ref(false);
 const userStore = useUserStore();
-const themesStore = useThemesStore();
 
 function closeDropdown() {
   showDropdown.value = false;
@@ -38,7 +36,6 @@ function toggleDropdown() {
             >Customers</router-link
           >
         </nav>
-        <button @click="themesStore.toggleTheme">Toggle Theme</button>
       </div>
       <div v-if="userStore.isLoggedIn" class="header-user">
         <img
