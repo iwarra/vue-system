@@ -1,19 +1,46 @@
 <script setup>
+import { onUnmounted, onMounted } from 'vue';
 import { useThemesStore } from "../stores/themes";
 import { useUserStore } from "../stores/user";
 const emit = defineEmits(['close']);
 const themeStore = useThemesStore();
 
-  const userStore = useUserStore();
-  const username = userStore.getUsername; 
+const userStore = useUserStore();
+const username = userStore.getUsername; 
 
-  function handleLogOut() {
-    userStore.resetUsername();
-    userStore.setLogIn(false);
-    //close the menu on log out
-    localStorage.removeItem("user");
-    emit("close");
-  };
+function handleLogOut() {
+  userStore.resetUsername();
+  userStore.setLogIn(false);
+  //close the menu on log out
+  localStorage.removeItem("user");
+  emit("close");
+};
+
+function handleClosingEvent(e) {
+  const parentSpan = e.target.closest('span');
+  const parentDiv = e.target.closest('div');
+
+  if (parentSpan !== null && parentSpan.classList.contains('svg-icon')) {
+    console.log('First conditional statement.');
+    return;
+  }
+
+  if (parentDiv && parentDiv.classList.contains('dropdown-menu')) {
+    console.log('Second condition.');
+    return;
+  }
+
+  emit("close");
+};
+  
+
+onMounted(() => {
+  document.addEventListener('click', handleClosingEvent)
+}) 
+
+onUnmounted(() => {
+  document.removeEventListener('click', handleClosingEvent)
+}) 
 </script>
 
 <template>
