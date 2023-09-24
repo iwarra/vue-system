@@ -52,6 +52,7 @@ function toggleDropdown() {
             v-if="!showDropdown"
             @click="toggleDropdown"
             name="triangle-down-outline"
+            class="svg-icon"
             size="15" />
           <mdicon 
             v-if="showDropdown"
