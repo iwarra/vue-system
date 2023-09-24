@@ -4,6 +4,9 @@ import { fetchData } from "../controller/getData.js";
 import { useCustomerStore } from "../stores/customer";
 import LoadingSpinner from './LoadingSpinner.vue';
 import { useLoadingStore } from "../stores/loading";
+import { useThemesStore } from "../stores/themes";
+
+const themeStore = useThemesStore();
 
 const loadingStore = useLoadingStore();
 let items = ref([]);
@@ -64,7 +67,7 @@ onMounted(() => { fetchData('customer', items.value ) });
     />
   </div>
   <LoadingSpinner v-if="loadingStore.isLoading" />
-    <table id="table" v-else>
+    <table id="table" :class="themeStore.getTheme ==='dark' ? 'table-dark' : ''" v-else>
       <thead>
         <tr>
           <th @click="sortCustomers(0)"> Name
@@ -116,7 +119,7 @@ table {
   font-family: Source Sans Pro;
 	width:100%;
   border-collapse: collapse; 
-}
+} 
 
 .customer-header input {
   margin-bottom: 44px;
@@ -139,10 +142,11 @@ th {
   padding: 10px;
   font-size: 21px;
   font-weight: 600;
-  background-color: #5d5d5d;
+  background-color: #6f6e6e;
   border-bottom: solid 2px #d8d8d8;
   position: sticky;
   top: 0;
+  text-align: start;
 }
 
 td {
@@ -154,6 +158,28 @@ td {
   color: grey;
 }
 
+.table-dark {
+  th {
+    background-color: #212529;
+  }
+  tbody tr {
+  transition: background-color 150ms ease-out;
+  background-color: #212529;
+  }
+  tbody tr:nth-child(2n) {
+    background-color:#2c3034;
+  }
+  tbody tr td {
+    color: rgb(231, 231, 231);
+  }
+  .table-name a {
+    color: rgb(231, 231, 231);
+  }
+  tbody tr:hover {
+  background-color: #61a6aa;
+  }
+}
+
 tbody tr {
   transition: background-color 150ms ease-out;
   background-color: #f8f6f6;
@@ -162,9 +188,8 @@ tbody tr:nth-child(2n) {
   background-color:#dcdbdb;
 }
 tbody tr:hover {
-  background-color: #cac9c9;
+  background-color: #d6f1f3;
 }
-
  .customer-header {
   display: flex;
   flex-direction: row;
@@ -172,10 +197,9 @@ tbody tr:hover {
   align-items: end;
   justify-content: space-between;
 } 
-
-th {
-  text-align: start;
-}
+ .customers-container {
+   margin-bottom: 100px;
+ }
 
 .customers-filter {
   height: 26px;
