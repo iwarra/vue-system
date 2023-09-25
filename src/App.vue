@@ -2,6 +2,7 @@
 import HeaderComponent from "./components/HeaderComponent.vue";
 import HomePage from "./components/HomePage.vue";
 import LoginForm from "./components/LoginForm.vue";
+import FooterComponent from "./components/FooterComponent.vue";
 import { onMounted } from "vue";
 import { useUserStore } from "./stores/user";
 import { useThemesStore } from "./stores/themes";
@@ -27,6 +28,7 @@ onMounted(() => {
     <HeaderComponent />
     <LoginForm v-if="!userStore.isLoggedIn"/>
     <HomePage v-else/>
+    <FooterComponent/>
   </div>
 </template>
 
