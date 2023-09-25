@@ -49,7 +49,22 @@ function sortCustomers(columnNr) {
   table.tBodies[0].append(...sortedRows);
 }
 
-onMounted(() => { fetchData('customer', items.value ) });
+function paginationCount() {
+  let paginationLength = items.value.length
+  console.log(paginationLength)
+  let max = (paginationLength / 10).toFixed(0)
+  let result = [];
+  for (let i = 1; i <= max; i++) {
+    result.push(i);
+  }
+  return result;
+}
+
+const pagesArray = computed(() => paginationCount())
+
+onMounted(() => { 
+  fetchData('customer', items.value )
+ });
 </script>
 
 <template>
@@ -108,6 +123,25 @@ onMounted(() => { fetchData('customer', items.value ) });
         </tr>
       </tbody>
     </table>
+    <div class="pagination">
+      <ul>
+        <mdicon 
+          name="menu-left"
+          size="50"
+          class="pgn-icon"
+        />
+        <li v-for="page in pagesArray"
+          class="pagination-item"
+        > 
+          {{ page }}
+        </li>
+        <mdicon 
+          name="menu-right"
+          size="50" 
+          class="pgn-icon"
+        />
+      </ul>
+    </div>
   </div>
 </template>
 
@@ -171,5 +205,23 @@ tbody tr:hover {
   padding-left: 5px;
   border: 1px solid gray;
   border-radius: 5px;
+}
+
+ul {
+  display: flex;
+  flex-direction: row;
+  margin-top: 30px;
+  gap: 12px;
+  justify-content: center;
+}
+.pagination-item {
+  list-style: none;
+  padding: 12px;
+  background-color: rgba(169, 226, 226, 0.613);
+  border-radius: 8px;
+}
+
+.pgn-icon {
+  color: #caeded;
 }
 </style>
