@@ -18,22 +18,19 @@ function handleLogOut() {
 
 function handleClosingEvent(e) {
   const parentSpan = e.target.closest('span');
-  const parentDiv = e.target.closest('div');
+  const parentLi = e.target.closest('li');
 
   if (parentSpan !== null && parentSpan.classList.contains('svg-icon')) {
-    console.log('First conditional statement.');
     return;
   }
 
-  if (parentDiv && parentDiv.classList.contains('dropdown-menu')) {
-    console.log('Second condition.');
+  if (parentLi !== null && parentLi.classList.contains('dropdown-item')) {
     return;
   }
 
   emit("close");
 };
   
-
 onMounted(() => {
   document.addEventListener('click', handleClosingEvent)
 }) 
@@ -47,12 +44,13 @@ onUnmounted(() => {
   <div :class="[themeStore.getTheme === 'light' ? 'wrapper' : 'dark']">
     <ul class="dropdown-nav">
       <li class="dropdown-item">
-        <div class="dropdown-link active">
+        <span class="dropdown-link active">
           <mdicon 
               :name="themeStore.getTheme === 'light'? 'toggle-switch-off-outline' : 'toggle-switch-outline'"
-              size="18" />
+              size="18" 
+          />
           <span @click="themeStore.toggleTheme">Toggle Theme</span>
-        </div>
+        </span>
       </li>
       <li class="dropdown-item">
         <router-link 
@@ -60,14 +58,13 @@ onUnmounted(() => {
                 name: 'UserView',
                 params: { username },
               }"
-          @click="emit('close')"
           class="dropdown-link active"
           title="User page"
         >
         <mdicon 
             name="card-account-details-outline"
             size="18" />
-          <div class="dropdown-text">Account</div>
+          <span class="dropdown-text">Account</span>
         </router-link>
       </li>
       <li class="dropdown-item">
@@ -75,7 +72,7 @@ onUnmounted(() => {
           <mdicon 
             name="database-edit-outline"
             size="20" />
-          <div class="dropdown-text">Data personalization</div>
+          <span class="dropdown-text">Data personalization</span>
         </a>
       </li>
       <li class="dropdown-item">
@@ -88,7 +85,7 @@ onUnmounted(() => {
          <mdicon 
             name="logout-variant"
             size="20" />
-          <div class="dropdown-text">Log out</div>
+          <span class="dropdown-text">Log out</span>
         </router-link>
       </li>
     </ul>
