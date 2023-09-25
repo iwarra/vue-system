@@ -66,7 +66,7 @@ function toggleDropdown() {
       class="dropdown-menu"
       @close="closeDropdown"
       v-if="showDropdown"
-      />
+    />
   </div>
 </template>
 

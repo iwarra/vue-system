@@ -11,6 +11,6 @@ import ReportChart from "../components/ReportChart.vue";
 
 <style scoped>
 .container {
-  height: 100vh;
+  margin-bottom: 80px;
 }
 </style>

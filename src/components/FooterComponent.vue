@@ -4,7 +4,7 @@ let currentDate = Date.now();
 </script>
 
 <template>
-  <footer class="footer">
+  <footer>
     <div>
       <img :src="logo2" alt="Company logo">
       <span>Copyright © {{ new Date(currentDate).getFullYear() }} Hello Company</span>
@@ -18,7 +18,7 @@ let currentDate = Date.now();
 
 
 <style scoped>
-  .footer {
+  footer {
     display: flex;
     flex-flow: row wrap;
     justify-content: space-evenly;

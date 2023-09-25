@@ -10,6 +10,5 @@
 .hello {
   max-width: 80vw;
   margin: 0 auto;
-  height: 100%;
 }
 </style>
