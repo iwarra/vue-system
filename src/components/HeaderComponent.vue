@@ -62,7 +62,6 @@ function toggleDropdown() {
         </div>
       </div>
     </header>
-    <hr />
     <UserMenu 
       class="dropdown-menu"
       @close="closeDropdown"
@@ -79,7 +78,7 @@ p {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  padding: 15px 20px 8px 20px;
+  padding: 16px 20px 12px 20px;
 }
 .header-info,
 .header-user {
@@ -110,13 +109,6 @@ img {
   height: 50px;
 }
 
-button {
-  padding: 3px 6px;
-  background-color: #eee;
-  border: 1px solid #02b0cd;
-  border-radius: 5px;
-}
-
 .user-avatar {
   border-radius: 50%;
 }
@@ -132,6 +124,7 @@ hr {
 }
 .wrapper {
   position: relative;
+  box-shadow: rgba(0, 0, 0, 0.12) 0px 3px 8px;
 }
 .dropdown-menu {
   position: absolute;
