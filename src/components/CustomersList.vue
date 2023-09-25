@@ -4,9 +4,6 @@ import { fetchData } from "../controller/getData.js";
 import { useCustomerStore } from "../stores/customer";
 import LoadingSpinner from './LoadingSpinner.vue';
 import { useLoadingStore } from "../stores/loading";
-import { useThemesStore } from "../stores/themes";
-
-const themeStore = useThemesStore();
 
 const loadingStore = useLoadingStore();
 let items = ref([]);
@@ -67,7 +64,7 @@ onMounted(() => { fetchData('customer', items.value ) });
     />
   </div>
   <LoadingSpinner v-if="loadingStore.isLoading" />
-    <table id="table" :class="themeStore.getTheme ==='dark' ? 'table-dark' : ''" v-else>
+    <table id="table" v-else>
       <thead>
         <tr>
           <th @click="sortCustomers(0)"> Name
@@ -95,7 +92,7 @@ onMounted(() => { fetchData('customer', items.value ) });
       </thead>
       <tbody>
         <tr v-for="item in filteredItems" :key="item.id" class="customer-row">
-          <td class="table-name">
+          <td>
             <router-link
               :to="{
                 name: 'SingleCustomerView',
@@ -121,20 +118,9 @@ table {
   border-collapse: collapse; 
 } 
 
-.customer-header input {
-  margin-bottom: 44px;
-}
-
 tbody {
   font-size: 18px;
-}
-
-table tr td {
-  border: none;
-  border-left: 0;
-  border-right: 0;
-  white-space: nowrap;
-  color: grey;
+  color: grey; 
 }
 
 th {
@@ -147,36 +133,15 @@ th {
   position: sticky;
   top: 0;
   text-align: start;
+  cursor: pointer;
 }
 
 td {
   padding: 4px 0px 4px 10px;
-}
 
-.table-name a {
-  text-decoration: none;
-  color: grey;
-}
-
-.table-dark {
-  th {
-    background-color: #212529;
-  }
-  tbody tr {
-  transition: background-color 150ms ease-out;
-  background-color: #212529;
-  }
-  tbody tr:nth-child(2n) {
-    background-color:#2c3034;
-  }
-  tbody tr td {
-    color: rgb(231, 231, 231);
-  }
-  .table-name a {
-    color: rgb(231, 231, 231);
-  }
-  tbody tr:hover {
-  background-color: #61a6aa;
+  a {
+    text-decoration: none;
+    color: grey;
   }
 }
 
@@ -190,20 +155,21 @@ tbody tr:nth-child(2n) {
 tbody tr:hover {
   background-color: #d6f1f3;
 }
- .customer-header {
+.customer-header {
   display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  align-items: end;
+  flex-flow: row wrap;
+  align-items: center;
   justify-content: space-between;
 } 
  .customers-container {
-   margin-bottom: 100px;
+   margin-bottom: 80px;
  }
 
 .customers-filter {
   height: 26px;
   min-width: 200px;
   padding-left: 5px;
+  border: 1px solid gray;
+  border-radius: 5px;
 }
 </style>

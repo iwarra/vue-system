@@ -1,4 +1,3 @@
-* Light/Dark theme gets lost on refresh
 * Pagination for display purpose (no fetch, just splitting the array)
 
 Backend to build later on:

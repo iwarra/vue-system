@@ -1,14 +1,19 @@
 import { defineStore } from "pinia";
 
 export const useThemesStore = defineStore({
-  id: "theme",
+  id: 'theme',
   state: () => ({
-    theme: "light",
+    theme: localStorage.getItem('darkTheme') ? 'dark' : 'light',
   }),
   actions: {
     toggleTheme() {
-      console.log("Toggling theme...");
-      this.theme = this.theme === 'light' ? 'dark' : 'light';
+      if (!localStorage.getItem('darkTheme')) {
+        localStorage.setItem('darkTheme', true)
+        this.theme = 'dark'
+      } else {
+        localStorage.removeItem('darkTheme')
+        this.theme = 'light'
+      }
     },
   },
   getters: {

@@ -41,9 +41,46 @@ onMounted(() => {
   color: #333333;
 }
 .dark-theme {
+  min-height: 100vh;
   background-color: #333333;
   color: #ffffff;
+
+  .wrapper{
+    box-shadow: rgba(225, 224, 224, 0.12) 0px 3px 8px;
+  }
+  
+  footer {
+    box-shadow: rgba(235, 234, 234, 0.453) 0px 3px 10px;
+  }
+
+  table {
+    th {
+      background-color: #212529;
+    }
+    tbody tr {
+    transition: background-color 150ms ease-out;
+    background-color: #212529;
+    }
+    tbody tr:nth-child(2n) {
+      background-color:#2c3034;
+    }
+    tbody tr td {
+      color: rgb(231, 231, 231);
+    }
+    .table-name a {
+      color: rgb(231, 231, 231);
+    }
+    tbody tr:hover {
+    background-color: #61a6aa;
+    }
+  };
+
+  .customers-filter {
+    background-color: #333333;
+    color: #ffffff;
+  }
 }
+
 h1 {
   font-weight: normal;
   font-size: 45px;
