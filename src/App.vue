@@ -26,8 +26,10 @@ onMounted(() => {
 <template >
   <div :class="[themesStore.theme === 'light' ? 'light-theme' : 'dark-theme']">
     <HeaderComponent />
-    <LoginForm v-if="!userStore.isLoggedIn"/>
-    <HomePage v-else/>
+    <main class="main">
+      <LoginForm v-if="!userStore.isLoggedIn"/>
+      <HomePage v-else/>
+    </main>
     <FooterComponent/>
   </div>
 </template>
@@ -36,14 +38,20 @@ onMounted(() => {
 #app {
   font-family: "Source Sans Pro";
 }
+
 .light-theme {
+  min-height: 100vh;
   background-color: #ffffff;
   color: #333333;
+  display: flex;
+  flex-direction: column;
 }
 .dark-theme {
   min-height: 100vh;
   background-color: #333333;
   color: #ffffff;
+  display: flex;
+  flex-direction: column;
 
   .wrapper{
     box-shadow: rgba(225, 224, 224, 0.12) 0px 3px 8px;
@@ -79,6 +87,10 @@ onMounted(() => {
     background-color: #333333;
     color: #ffffff;
   }
+}
+
+.main {
+  flex: 1;
 }
 
 h1 {
