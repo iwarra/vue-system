@@ -1,16 +1,230 @@
 <script setup>
-    import CustomersList from '../components/CustomersList.vue';
+import { ref, computed, onMounted } from "vue";
+import { fetchData } from "../controller/getData.js";
+import { useCustomerStore } from "../stores/customer";
+import LoadingSpinner from '../components/LoadingSpinner.vue';
+import { useLoadingStore } from "../stores/loading";
+
+const loadingStore = useLoadingStore();
+let items = ref([]);
+let filter = ref('');
+let sortingDirections = ref(new Array(3).fill(null));
+
+function navigateAndSendData(data) {
+  const customerStore = useCustomerStore();
+  customerStore.setCustomer(data);
+};
+
+const filteredItems = computed(() => {
+  if (!filter.value) {
+    // If the filter is empty, return all items
+    return items.value; 
+  }
+  const lowerCaseFilter = filter.value.toLowerCase();
+  return items.value.filter((item) => {
+    const customerName = item.name.toLowerCase();
+    return customerName.includes(lowerCaseFilter);
+  })
+});
+
+function sortCustomers(columnNr) {
+  sortingDirections.value[columnNr] = !sortingDirections.value[columnNr];
+  let ascending = sortingDirections.value[columnNr]
+
+  let sortedRows = Array.from(table.tBodies[0].rows) 
+    .sort((rowA, rowB) => {
+      const cellA = rowA.cells[columnNr].innerText;
+      const cellB = rowB.cells[columnNr].innerText;
+
+      const numA = parseFloat(cellA);
+      const numB = parseFloat(cellB);
+
+      if (!isNaN(numA) && !isNaN(numB)) {
+        return ascending ? numA - numB : numB - numA;
+      } else {
+        return ascending ? cellA.localeCompare(cellB) : cellB.localeCompare(cellA);
+      }
+    });
+
+  table.tBodies[0].append(...sortedRows);
+}
+
+function paginationCount() {
+  let paginationLength = items.value.length
+  console.log(paginationLength)
+  let max = (paginationLength / 10).toFixed(0)
+  let result = [];
+  for (let i = 1; i <= max; i++) {
+    result.push(i);
+  }
+  return result;
+}
+
+const pagesArray = computed(() => paginationCount())
+
+onMounted(() => { 
+  fetchData('customer', items.value )
+ });
 </script>
 
 <template>
-    <div class="container">
-        <CustomersList />
+  <div class="customers-container">
+  <div class="customer-header">
+    <h1>Customers page</h1>
+    <input
+      v-model="filter"
+      class="customers-filter"
+      type="text"
+      placeholder="Search..."
+    />
+  </div>
+  <LoadingSpinner v-if="loadingStore.isLoading" />
+    <table id="table" v-else>
+      <thead>
+        <tr>
+          <th @click="sortCustomers(0)"> Name
+            <mdicon 
+              class="sorting-icon"
+              :name="sortingDirections[0] ? 'triangle-small-up' : 'triangle-small-down'"
+              size="25" 
+            />
+          </th>
+          <th @click="sortCustomers(1)"> Arr
+            <mdicon 
+              class="sorting-icon"
+              :name="sortingDirections[1] ? 'triangle-small-up' : 'triangle-small-down'"
+              size="25" 
+            />
+          </th>
+          <th @click="sortCustomers(2)"> ID
+            <mdicon 
+              class="sorting-icon"
+              :name="sortingDirections[2] ? 'triangle-small-up' : 'triangle-small-down'"
+              size="25" 
+            />
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="item in filteredItems" :key="item.id" class="customer-row">
+          <td>
+            <router-link
+              :to="{
+                name: 'SingleCustomerView',
+                params: { id: item.id },
+              }"
+              @click="navigateAndSendData(item)"
+            >
+              {{ item.name }}
+            </router-link>
+          </td>
+          <td class="table-arr">{{ item.arr }}</td>
+          <td class="table-id">{{ item.id }}</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="pagination">
+      <ul>
+        <mdicon 
+          name="menu-left"
+          size="50"
+          class="pgn-icon"
+        />
+        <li v-for="page in pagesArray" 
+          :key="page"
+          class="pagination-item"
+        > 
+          {{ page }}
+        </li>
+        <mdicon 
+          name="menu-right"
+          size="50" 
+          class="pgn-icon"
+        />
+      </ul>
     </div>
+  </div>
 </template>
 
 <style scoped>
-.container {
-  min-height: 100vh;
-  height: 100%;
+  table {
+  font-family: Source Sans Pro;
+	width:100%;
+  border-collapse: collapse; 
+} 
+
+tbody {
+  font-size: 18px;
+  color: grey; 
+}
+
+th {
+  color: #67d5e8;
+  padding: 10px;
+  font-size: 21px;
+  font-weight: 600;
+  background-color: #6f6e6e;
+  border-bottom: solid 2px #d8d8d8;
+  position: sticky;
+  top: 0;
+  text-align: start;
+  cursor: pointer;
+}
+
+td {
+  padding: 4px 0px 4px 10px;
+
+  a {
+    text-decoration: none;
+    color: grey;
+  }
+}
+
+tbody tr {
+  transition: background-color 150ms ease-out;
+  background-color: #f8f6f6;
+}
+tbody tr:nth-child(2n) {
+  background-color:#dcdbdb;
+}
+tbody tr:hover {
+  background-color: #d6f1f3;
+}
+.customer-header {
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+  justify-content: space-between;
+} 
+ .customers-container {
+   margin-bottom: 80px;
+ }
+
+.customers-filter {
+  height: 26px;
+  min-width: 200px;
+  padding-left: 5px;
+  border: 1px solid gray;
+  border-radius: 5px;
+}
+
+ul {
+  display: flex;
+  flex-direction: row;
+  margin-top: 30px;
+  gap: 12px;
+  justify-content: center;
+}
+.pagination-item {
+  list-style: none;
+  padding: 12px;
+  background-color: rgba(169, 226, 226, 0.613);
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.pgn-icon {
+  color: #caeded;
+  cursor: pointer;
 }
 </style>
