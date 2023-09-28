@@ -57,15 +57,15 @@ function handleSubmit() {
 </template>
 
 
-<style  scoped>
+<style scoped>
 .container {
-  height: 100vh;
+  margin-bottom: 80px;
+  
+  h1 {
+    text-align: center;
+  }
 }
 
-h1 {
-  text-align: center;
-  font-weight: normal;
-}
 
 .login-form {
   display: flex;
@@ -73,19 +73,20 @@ h1 {
   align-items: center;
   gap: 0.8em;
   margin-top: 3em;
+
+  label {
+    font-size: large;
+  }
+  
+  input {
+    border: 0.5px solid rgb(208, 205, 205);
+    border-radius: 5px;
+    height: 2.3em;
+    padding-inline-start: 0.8em;
+    min-width: 50%;
+  }
 }
 
-label {
-  font-size: large;
-}
-
-input {
-  border: 0.5px solid rgb(208, 205, 205);
-  border-radius: 5px;
-  height: 2.3em;
-  padding-inline-start: 0.8em;
-  min-width: 50%;
-}
 
 .btn {
   border: 0.5px solid rgb(208, 205, 205);

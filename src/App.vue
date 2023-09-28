@@ -53,8 +53,8 @@ onMounted(() => {
   display: flex;
   flex-direction: column;
 
-  .wrapper{
-    box-shadow: rgba(225, 224, 224, 0.12) 0px 3px 8px;
+  .header-wrapper{
+    box-shadow: rgba(225, 224, 224, 0.12) 0px 4px 10px;
   }
   
   footer {

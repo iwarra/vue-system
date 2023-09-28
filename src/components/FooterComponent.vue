@@ -7,7 +7,7 @@ let currentDate = Date.now();
   <footer>
     <div>
       <img :src="logo2" alt="Company logo">
-      <span>Copyright © {{ new Date(currentDate).getFullYear() }} Hello Company</span>
+      <span>Copyright &copy; {{ new Date(currentDate).getFullYear() }} Hello Company</span>
     </div>
     <ul> Contact:
       <li> <a href="mailto:hello@company.com">hello@company.com</a> </li>

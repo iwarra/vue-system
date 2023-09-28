@@ -44,12 +44,12 @@ onUnmounted(() => {
   <div :class="[themeStore.getTheme === 'light' ? 'wrapper' : 'dark']">
     <ul class="dropdown-nav">
       <li class="dropdown-item">
-        <span class="dropdown-link active">
+        <span class="dropdown-link active" @click="themeStore.toggleTheme">
           <mdicon 
               :name="themeStore.getTheme === 'light'? 'toggle-switch-off-outline' : 'toggle-switch-outline'"
               size="18" 
           />
-          <span @click="themeStore.toggleTheme">Toggle Theme</span>
+          <span>Toggle Theme</span>
         </span>
       </li>
       <li class="dropdown-item">
@@ -96,14 +96,16 @@ onUnmounted(() => {
 .dark {
   background-color: #333333;;
   color: white;
-  border: 1px solid rgb(120, 120, 120);
   z-index: 1;
+  box-shadow: rgba(225, 224, 224, 0.12) 0px 8px 10px, rgba(225, 224, 224, 0.12) 0px 4px 8px;
+  border: 1px solid #565656;
 }
 .wrapper {
    position: relative; 
    z-index: 1;
    background-color: white;
    border: 1px solid #ccc;
+   box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
 }
 
 ul {
@@ -129,6 +131,6 @@ a {
   pointer-events: auto;
 }
 .dropdown-nav {
-  padding: 0;
+  padding: 10px;
 }
 </style>

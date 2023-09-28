@@ -1,9 +1,7 @@
 <script setup></script>
 
 <template>
-  <div class="hello">
-    <router-view />
-  </div>
+  <router-view class="hello"/>
 </template>
 
 <style scoped>

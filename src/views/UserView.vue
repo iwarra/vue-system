@@ -15,14 +15,11 @@
 </template>
 
 <style scoped>
-.container {
-  height: 100vh;
-}
 hr {
   margin-bottom: 20px;
 }
 p {
   font-size: 18px;
-  margin: 10px 0 10px 0;
+  margin: 10px 0;
 }
 </style>

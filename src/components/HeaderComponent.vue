@@ -20,8 +20,8 @@ function toggleDropdown() {
 </script>
 
 <template>
-   <div class="wrapper">
-    <header class="header">
+   <header class="header-wrapper">
+    <div class="header-miniWrap">
       <div :class="[userStore.username.length > 0 ? 'header-info' : 'header-info--loggedOut']">
         <img class="header-logo" :src="logoLink" alt="Company logo" />
         <p class="header-title">VUE APP</p>
@@ -61,20 +61,22 @@ function toggleDropdown() {
             size="15" />
         </div>
       </div>
-    </header>
+    </div>
     <UserMenu 
       class="dropdown-menu"
       @close="closeDropdown"
       v-if="showDropdown"
     />
-  </div>
+  </header>
 </template>
 
 <style scoped>
-p {
-  margin: 0;
-}
-.header {
+.header-wrapper {
+  position: relative;
+  box-shadow: rgba(0, 0, 0, 0.12) 0px 3px 8px;
+} 
+
+.header-miniWrap {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -104,6 +106,7 @@ p {
   font-weight: 700;
   font-size: 20px;
 }
+
 img {
   width: 50px;
   height: 50px;
@@ -115,25 +118,20 @@ img {
 .user-name {
   font-weight: 600;
 }
-.user-title,
-hr {
+.user-title {
   color: #a9aebf;
 }
 .header-user {
   align-items: center;
 }
-.wrapper {
-  position: relative;
-  box-shadow: rgba(0, 0, 0, 0.12) 0px 3px 8px;
-}
+
 .dropdown-menu {
   position: absolute;
   top: 100%;
   right: 0;
-  box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
 }
 .nav-link {
-  margin-right: 8px;
+  margin-right: 10px;
   font-size: 18px;
   text-decoration: none;
   color: #797d8b;
