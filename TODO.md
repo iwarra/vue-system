@@ -1,4 +1,5 @@
 * Pagination for display purpose (no fetch, just splitting the array)
+* Pagination conditional rendering
 
 Backend to build later on:
 * Build my own API to allow offset and name query
