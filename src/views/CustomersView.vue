@@ -1,13 +1,14 @@
 <script setup>
 import { ref, computed, onMounted } from "vue";
 import { fetchData } from "../controller/getData.js";
-import { useCustomerStore } from "../stores/customer";
 import LoadingSpinner from '../components/LoadingSpinner.vue';
+import { useCustomerStore } from "../stores/customer";
 import { useLoadingStore } from "../stores/loading";
 
 const loadingStore = useLoadingStore();
 let items = ref([]);
 let filter = ref('');
+let pageNumber = ref(1)
 let sortingDirections = ref(new Array(3).fill(null));
 
 function navigateAndSendData(data) {
@@ -17,8 +18,8 @@ function navigateAndSendData(data) {
 
 const filteredItems = computed(() => {
   if (!filter.value) {
-    // If the filter is empty, return all items
-    return items.value; 
+    // If the filter is empty, return all items for that page
+    return splittingTheArray(pageNumber.value)
   }
   const lowerCaseFilter = filter.value.toLowerCase();
   return items.value.filter((item) => {
@@ -50,20 +51,39 @@ function sortCustomers(columnNr) {
 }
 
 function paginationCount() {
-  let paginationLength = items.value.length
-  console.log(paginationLength)
-  let max = (paginationLength / 10).toFixed(0)
+  let max = Math.ceil(items.value.length / 10)
   let result = [];
   for (let i = 1; i <= max; i++) {
     result.push(i);
   }
   return result;
 }
-
 const pagesArray = computed(() => paginationCount())
 
-onMounted(() => { 
-  fetchData('customer', items.value )
+const newSplitArray = computed (() => {
+  const numPages = Math.ceil(items.value.length / 10);
+  const chunks = [];
+  for (let i = 0; i < numPages; i++) {
+    const startIndex = i * 10;
+    let endIndex = startIndex + 10;
+    const chunk = items.value.slice(startIndex, endIndex);
+    chunks.push(chunk);
+  }
+  return chunks;
+});
+
+function getIconClass(condition) {
+  return condition ? 'disabled' : 'pgn-icon';
+}
+
+function splittingTheArray(page) {
+  pageNumber.value = page;
+  return (newSplitArray.value[page - 1])
+}
+
+onMounted(async () => { 
+  await fetchData('customer', items.value )
+  splittingTheArray(pageNumber.value)
  });
 </script>
 
@@ -124,22 +144,27 @@ onMounted(() => {
       </tbody>
     </table>
     <div class="pagination">
-      <ul>
+      <ul v-if="pagesArray.length > 0">
         <mdicon 
           name="menu-left"
+          role="button"
           size="50"
-          class="pgn-icon"
+          :class="getIconClass(pageNumber <= 1)"
+          @click="splittingTheArray(pageNumber - 1)"
         />
         <li v-for="page in pagesArray" 
           :key="page"
           class="pagination-item"
+          @click="splittingTheArray(page)"
         > 
           {{ page }}
         </li>
         <mdicon 
           name="menu-right"
+          role="button"
           size="50" 
-          class="pgn-icon"
+          :class="getIconClass(pageNumber >= paginationCount().length)"
+          @click="splittingTheArray(pageNumber + 1)"
         />
       </ul>
     </div>
@@ -224,7 +249,12 @@ ul {
 }
 
 .pgn-icon {
-  color: #caeded;
+  color: #baefef;
   cursor: pointer;
+}
+
+.disabled {
+  color: #c4c7c7;
+  pointer-events: none;
 }
 </style>

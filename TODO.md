@@ -1,5 +1,5 @@
-* Pagination for display purpose (no fetch, just splitting the array)
-* Pagination conditional rendering
+* Pagination: add to local storage to not lose on refresh
+* Add routing ?
 
 Backend to build later on:
 * Build my own API to allow offset and name query
