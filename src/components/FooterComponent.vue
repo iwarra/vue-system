@@ -4,36 +4,42 @@ let currentDate = Date.now();
 </script>
 
 <template>
-  <footer>
+  <footer class="footer">
     <div>
       <img :src="logo2" alt="Company logo">
-      <span>Copyright &copy; {{ new Date(currentDate).getFullYear() }} Hello Company</span>
+      <span class="copyText">Copyright &copy; {{ new Date(currentDate).getFullYear() }} Hello Company</span>
     </div>
-    <ul> Contact:
-      <li> <a href="mailto:hello@company.com">hello@company.com</a> </li>
-      <li> <a href="tel:+1234567890">+12 345 67 890</a> </li>
+    <ul class="links-list"> Contact:
+      <li> <a  class="link" href="mailto:hello@company.com">hello@company.com</a> </li>
+      <li> <a href="tel:+1234567890" class="link">+12 345 67 890</a> </li>
     </ul>
   </footer>
 </template>
 
 
 <style scoped>
-  footer {
+  .footer {
     display: flex;
     flex-flow: row wrap;
     justify-content: space-evenly;
     padding-block: 25px;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 
-    ul {
+    .links-list {
       list-style: none;
     }
-    a {
+    .link {
       color: #02b0cd;
     }
-    span {
+    .copyText {
       color: #f5bf12;
       margin-left: 8px;
     };
   }
+
+  @media only screen and (max-width: 625px) {
+  .links-list {
+    margin-top: 20px;
+  }
+}
 </style>

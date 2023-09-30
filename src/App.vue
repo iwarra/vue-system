@@ -57,28 +57,28 @@ onMounted(() => {
     box-shadow: rgba(225, 224, 224, 0.12) 0px 4px 10px;
   }
   
-  footer {
+  .footer {
     box-shadow: rgba(235, 234, 234, 0.453) 0px 3px 10px;
   }
 
-  table {
-    th {
+  .customer-table {
+    .table-header {
       background-color: #212529;
     }
-    tbody tr {
+    .table-body tr {
     transition: background-color 150ms ease-out;
     background-color: #212529;
     }
-    tbody tr:nth-child(2n) {
+    .table-body tr:nth-child(2n) {
       background-color:#2c3034;
     }
-    tbody tr td {
+    .table-body tr td {
       color: rgb(231, 231, 231);
     }
     .table-name a {
       color: rgb(231, 231, 231);
     }
-    tbody tr:hover {
+    .table-body tr:hover {
     background-color: #61a6aa;
     }
   };

@@ -99,24 +99,24 @@ onMounted(async () => {
     />
   </div>
   <LoadingSpinner v-if="loadingStore.isLoading" />
-    <table id="table" v-else>
-      <thead>
+    <table id="table" v-else class="customer-table">
+      <thead class="table-header">
         <tr>
-          <th @click="sortCustomers(0)"> Name
+          <th @click="sortCustomers(0)" class="th-text"> Name
             <mdicon 
               class="sorting-icon"
               :name="sortingDirections[0] ? 'triangle-small-up' : 'triangle-small-down'"
               size="25" 
             />
           </th>
-          <th @click="sortCustomers(1)"> Arr
+          <th @click="sortCustomers(1)" class="th-text"> Arr
             <mdicon 
               class="sorting-icon"
               :name="sortingDirections[1] ? 'triangle-small-up' : 'triangle-small-down'"
               size="25" 
             />
           </th>
-          <th @click="sortCustomers(2)"> ID
+          <th @click="sortCustomers(2)" class="th-text"> ID
             <mdicon 
               class="sorting-icon"
               :name="sortingDirections[2] ? 'triangle-small-up' : 'triangle-small-down'"
@@ -125,21 +125,22 @@ onMounted(async () => {
           </th>
         </tr>
       </thead>
-      <tbody>
+      <tbody class="table-body">
         <tr v-for="item in filteredItems" :key="item.id" class="customer-row">
-          <td>
+          <td class="table-data">
             <router-link
               :to="{
                 name: 'SingleCustomerView',
                 params: { id: item.id },
               }"
               @click="navigateAndSendData(item)"
+              class="table-link"
             >
               {{ item.name }}
             </router-link>
           </td>
-          <td class="table-arr">{{ item.arr }}</td>
-          <td class="table-id">{{ item.id }}</td>
+          <td class="table-data">{{ item.arr }}</td>
+          <td class="table-data">{{ item.id }}</td>
         </tr>
       </tbody>
     </table>
@@ -172,47 +173,51 @@ onMounted(async () => {
 </template>
 
 <style scoped>
-  table {
+.customer-table {
   font-family: Source Sans Pro;
 	width:100%;
   border-collapse: collapse; 
 } 
 
-tbody {
+.table-body {
   font-size: 18px;
   color: grey; 
 }
 
-th {
+.table-header {
   color: #67d5e8;
-  padding: 10px;
   font-size: 21px;
   font-weight: 600;
   background-color: #6f6e6e;
   border-bottom: solid 2px #d8d8d8;
   position: sticky;
   top: 0;
-  text-align: start;
   cursor: pointer;
 }
 
-td {
-  padding: 4px 0px 4px 10px;
+.th-text {
+  padding: 10px;
+  text-align: start;
+}
 
-  a {
+.table-data {
+  padding: 4px 0px 4px 10px;
+  text-align: start;
+
+  .table-link {
     text-decoration: none;
     color: grey;
   }
 }
 
-tbody tr {
+.table-body tr {
   transition: background-color 150ms ease-out;
   background-color: #f8f6f6;
 }
-tbody tr:nth-child(2n) {
+.table-body tr:nth-child(2n) {
   background-color:#dcdbdb;
 }
-tbody tr:hover {
+.table-body tr:hover {
   background-color: #d6f1f3;
 }
 .customer-header {
@@ -256,5 +261,11 @@ ul {
 .disabled {
   color: #c4c7c7;
   pointer-events: none;
+}
+
+@media only screen and (max-width: 625px) {
+  .customer-table {
+    margin-top: 40px;
+  }
 }
 </style>
