@@ -38,17 +38,18 @@ function handleSubmit() {
 
 <template>
   <div class="container">
-    <h1>Please log in</h1>
+    <h1 class="login-title">Please log in</h1>
     <form class="login-form" @submit.prevent="handleSubmit">
-      <label for="name">Username:</label>
-      <input type="text" id="name" v-model="username" ref="nameInput" />
+      <label for="name" class="login-label">Username:</label>
+      <input type="text" id="name" v-model="username" ref="nameInput" class="login-input"/>
       <span class="error"> {{ errorName }} </span>
-      <label for="password">Password:</label>
+      <label for="password" class="login-label">Password:</label>
       <input
         id="password"
         type="password"
         v-model="password"
         ref="passwordInput"
+        class="login-input"
       />
       <span class="error"> {{ errorPassword }} </span>
       <button type="submit" class="btn">Log in</button>
@@ -61,7 +62,7 @@ function handleSubmit() {
 .container {
   margin-bottom: 80px;
   
-  h1 {
+  .login-title {
     text-align: center;
   }
 }
@@ -74,11 +75,11 @@ function handleSubmit() {
   gap: 0.8em;
   margin-top: 3em;
 
-  label {
+  .login-label {
     font-size: large;
   }
   
-  input {
+  .login-input {
     border: 0.5px solid rgb(208, 205, 205);
     border-radius: 5px;
     height: 2.3em;
