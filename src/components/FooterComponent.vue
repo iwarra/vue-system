@@ -37,9 +37,12 @@ let currentDate = Date.now();
     };
   }
 
-  @media only screen and (max-width: 625px) {
-  .links-list {
-    margin-top: 20px;
+  @media only screen and (max-width: 560px) {
+  .footer {
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+    padding-block: 15px;
   }
 }
 </style>

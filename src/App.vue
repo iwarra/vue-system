@@ -65,7 +65,7 @@ onMounted(() => {
     .table-header {
       background-color: #212529;
     }
-    .table-body tr {
+    .table-body .customer-row {
     transition: background-color 150ms ease-out;
     background-color: #212529;
     }

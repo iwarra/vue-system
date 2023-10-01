@@ -142,8 +142,10 @@ img {
   text-decoration: underline;
 }
 @media (max-width: 560px) {
-  .user-avatar {
+  .user-avatar, .header-title {
     display: none;
   }
+
+
 }
 </style>
