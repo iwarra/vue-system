@@ -2,7 +2,6 @@
 import { ref, computed, onMounted } from "vue";
 import { fetchData } from "../controller/getData.js";
 import LoadingSpinner from '../components/LoadingSpinner.vue';
-import { useCustomerStore } from "../stores/customer";
 import { useLoadingStore } from "../stores/loading";
 
 const loadingStore = useLoadingStore();
@@ -11,9 +10,15 @@ let filter = ref('');
 let pageNumber = ref(1)
 let sortingDirections = ref(new Array(3).fill(null));
 
-function navigateAndSendData(data) {
-  const customerStore = useCustomerStore();
-  customerStore.setCustomer(data);
+function processAndAddData(data) {
+  localStorage.removeItem('customer')
+  let customerObj = {
+    name: data.name,
+    arr: data.arr,
+    seats: data.seats,
+    createdAt: data.createdAt
+  }
+  localStorage.setItem('customer', JSON.stringify(customerObj))
 };
 
 const filteredItems = computed(() => {
@@ -51,29 +56,22 @@ function sortCustomers(columnNr) {
 }
 
 function paginationCount() {
-  let max = Math.ceil(items.value.length / 10)
-  let result = [];
-  for (let i = 1; i <= max; i++) {
-    result.push(i);
-  }
-  return result;
+  let max = Math.ceil(items.value.length / 10);
+  return Array.from({ length: max }, (_, i) => i + 1);
 }
 const pagesArray = computed(() => paginationCount())
 
-const newSplitArray = computed (() => {
+const newSplitArray = computed(() => {
   const numPages = Math.ceil(items.value.length / 10);
-  const chunks = [];
-  for (let i = 0; i < numPages; i++) {
+  return Array.from({ length: numPages }, (_, i) => {
     const startIndex = i * 10;
-    let endIndex = startIndex + 10;
-    const chunk = items.value.slice(startIndex, endIndex);
-    chunks.push(chunk);
-  }
-  return chunks;
+    const endIndex = startIndex + 10;
+    return items.value.slice(startIndex, endIndex);
+  });
 });
 
 function getIconClass(condition) {
-  return condition ? 'disabled' : 'pgn-icon';
+  return condition ? 'pgn-icon--disabled' : 'pgn-icon';
 }
 
 function splittingTheArray(page) {
@@ -89,8 +87,8 @@ onMounted(async () => {
 
 <template>
   <div class="customers-container">
-  <div class="customer-header">
-    <h1>Customers page</h1>
+  <div class="customers-header">
+    <h1 class="customers-title">Customers page</h1>
     <input
       v-model="filter"
       class="customers-filter"
@@ -133,7 +131,7 @@ onMounted(async () => {
                 name: 'SingleCustomerView',
                 params: { id: item.id },
               }"
-              @click="navigateAndSendData(item)"
+              @click="processAndAddData(item)"
               class="table-link"
             >
               {{ item.name }}
@@ -145,7 +143,7 @@ onMounted(async () => {
       </tbody>
     </table>
     <div class="pagination">
-      <ul v-if="pagesArray.length > 0">
+      <ul v-if="pagesArray.length > 0" class="pagination-list">
         <mdicon 
           name="menu-left"
           role="button"
@@ -164,7 +162,7 @@ onMounted(async () => {
           name="menu-right"
           role="button"
           size="50" 
-          :class="getIconClass(pageNumber >= paginationCount().length)"
+          :class="getIconClass(pageNumber >= pagesArray.length)"
           @click="splittingTheArray(pageNumber + 1)"
         />
       </ul>
@@ -177,11 +175,36 @@ onMounted(async () => {
   font-family: Source Sans Pro;
 	width:100%;
   border-collapse: collapse; 
+
+  .th-text {
+    padding: 10px 8px;
+    text-align: start;
+  }
+  
+  .table-data {
+    padding: 4px 0px 4px 10px;
+    text-align: start;
+  
+    .table-link {
+      text-decoration: none;
+      color: grey;
+    }
+  }
 } 
 
 .table-body {
   font-size: 18px;
   color: grey; 
+}
+.table-body tr {
+  transition: background-color 150ms ease-out;
+  background-color: #f8f6f6;
+}
+.table-body tr:nth-child(2n) {
+  background-color:#dcdbdb;
+}
+.table-body tr:hover {
+  background-color: #d6f1f3;
 }
 
 .table-header {
@@ -194,41 +217,15 @@ onMounted(async () => {
   top: 0;
   cursor: pointer;
 }
-
-.th-text {
-  padding: 10px;
-  text-align: start;
-}
-
-.table-data {
-  padding: 4px 0px 4px 10px;
-  text-align: start;
-
-  .table-link {
-    text-decoration: none;
-    color: grey;
-  }
-}
-
-.table-body tr {
-  transition: background-color 150ms ease-out;
-  background-color: #f8f6f6;
-}
-.table-body tr:nth-child(2n) {
-  background-color:#dcdbdb;
-}
-.table-body tr:hover {
-  background-color: #d6f1f3;
-}
-.customer-header {
+.customers-header {
   display: flex;
   flex-flow: row wrap;
   align-items: center;
   justify-content: space-between;
 } 
- .customers-container {
-   margin-bottom: 80px;
- }
+.customers-container {
+  margin-bottom: 80px;
+}
 
 .customers-filter {
   height: 26px;
@@ -238,7 +235,7 @@ onMounted(async () => {
   border-radius: 5px;
 }
 
-ul {
+.pagination-list {
   display: flex;
   flex-direction: row;
   margin-top: 30px;
@@ -258,8 +255,8 @@ ul {
   cursor: pointer;
 }
 
-.disabled {
-  color: #c4c7c7;
+.pgn-icon--disabled {
+  color: #cbcccc;
   pointer-events: none;
 }
 

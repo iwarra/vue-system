@@ -1,7 +1,5 @@
 <script setup>
-  import { useCustomerStore } from "../stores/customer";
-  const customerStore = useCustomerStore();
-  const customer = customerStore.getCustomer();
+  const customer = JSON.parse(localStorage.getItem('customer'));
 </script>
 
 <template>
@@ -10,6 +8,7 @@
     <hr />
     <p>Number of seats: {{ customer.seats }}</p>
     <p>Customer arr: {{ customer.arr }}</p>
+    <p>Created at: {{ customer.createdAt.slice(0,10) }}</p>
   </div>
 </template>
 
