@@ -29,10 +29,10 @@ let currentDate = Date.now();
       list-style: none;
     }
     .link {
-      color: #02b0cd;
+      color: var(--primary-accent);
     }
     .copyText {
-      color: #f5bf12;
+      color: var(--secondary-accent);
       margin-left: 8px;
     };
   }

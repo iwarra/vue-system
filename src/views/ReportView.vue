@@ -16,7 +16,7 @@ const chartConfig = {
       {
         label: "New arr per month",
         backgroundColor: "rgb(2, 176, 205)",
-        borderColor: "rgn (0, 0, 0)",
+        borderColor: "rgb (0, 0, 0)",
         data: [],
       },
     ],
@@ -80,30 +80,27 @@ onMounted(() =>  {
 </script>
 
 <template>
-  <div class="chart-container">
-  <h1>Home</h1>
-  <LoadingSpinner v-if="loadingStore.isLoading" />
-  <template v-else>
-    <div class="chart-info">
-      <div class="chart-col">
-        <span class="chart-name">Arr</span>
-        <p class="chart-number">${{ formattedTotalArr }}</p>
+  <div class="container">
+    <h1>Home</h1>
+    <LoadingSpinner v-if="loadingStore.isLoading" />
+    <template v-else>
+      <div class="chart-info">
+        <div class="chart-col">
+          <span class="chart-name">Arr</span>
+          <p class="chart-number">${{ formattedTotalArr }}</p>
+        </div>
+        <div class="chart-col">
+          <span class="chart-name">Seats</span>
+          <p class="chart-number">{{ totalSeats }}</p>
+        </div>
       </div>
-      <div class="chart-col">
-        <span class="chart-name">Seats</span>
-        <p class="chart-number">{{ totalSeats }}</p>
-      </div>
-    </div>
-    <canvas id="myChart"></canvas>
-  </template>
+      <canvas id="myChart"></canvas>
+    </template>
   </div>
 </template>
 
 
 <style scoped>
-.chart-container {
-  margin-bottom: 80px;
-}
 .chart-info {
   display: flex;
   flex-direction: row;

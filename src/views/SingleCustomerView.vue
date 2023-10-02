@@ -14,11 +14,8 @@
 
 
 <style scoped>
-hr {
-  margin-bottom: 20px;
-}
-p {
-  font-size: 18px;
-  margin: 10px 0;
-}
+  p {
+    font-size: 18px;
+    margin: 10px 0;
+  }
 </style>

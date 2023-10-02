@@ -70,8 +70,13 @@ const newSplitArray = computed(() => {
   });
 });
 
-function getIconClass(condition) {
-  return condition ? 'pgn-icon--disabled' : 'pgn-icon';
+function getIconClass(element, condition) {
+  if (element === 'icon') {
+    return condition ? 'pgn-icon--disabled' : 'pgn-icon';
+  }
+  if (element === 'item') {
+    return condition ? 'pagination-item active' : 'pagination-item'
+  }
 }
 
 function splittingTheArray(page) {
@@ -82,20 +87,20 @@ function splittingTheArray(page) {
 onMounted(async () => { 
   await fetchData('customer', items.value )
   splittingTheArray(pageNumber.value)
- });
+});
 </script>
 
 <template>
-  <div class="customers-container">
-  <div class="customers-header">
-    <h1 class="customers-title">Customers page</h1>
-    <input
-      v-model="filter"
-      class="customers-filter"
-      type="text"
-      placeholder="Search..."
-    />
-  </div>
+  <div class="container">
+    <div class="customers-header">
+      <h1>Customers page</h1>
+      <input
+        v-model="filter"
+        class="customers-filter"
+        type="text"
+        placeholder="Search..."
+      />
+    </div>
   <LoadingSpinner v-if="loadingStore.isLoading" />
     <table id="table" v-else class="customer-table">
       <thead class="table-header">
@@ -148,12 +153,12 @@ onMounted(async () => {
           name="menu-left"
           role="button"
           size="50"
-          :class="getIconClass(pageNumber <= 1)"
+          :class="getIconClass('icon', pageNumber <= 1)"
           @click="splittingTheArray(pageNumber - 1)"
         />
         <li v-for="page in pagesArray" 
           :key="page"
-          class="pagination-item"
+          :class="getIconClass('item', pageNumber === page)"
           @click="splittingTheArray(page)"
         > 
           {{ page }}
@@ -162,7 +167,7 @@ onMounted(async () => {
           name="menu-right"
           role="button"
           size="50" 
-          :class="getIconClass(pageNumber >= pagesArray.length)"
+          :class="getIconClass('icon', pageNumber >= pagesArray.length)"
           @click="splittingTheArray(pageNumber + 1)"
         />
       </ul>
@@ -184,10 +189,11 @@ onMounted(async () => {
   .table-data {
     padding: 4px 0px 4px 10px;
     text-align: start;
+    color: #a4a4a4;
   
     .table-link {
       text-decoration: none;
-      color: grey;
+      color: #a4a4a4;
     }
   }
 } 
@@ -197,22 +203,22 @@ onMounted(async () => {
   color: grey; 
 }
 .table-body tr {
-  transition: background-color 150ms ease-out;
+  transition: background-color 250ms ease-out;
   background-color: #f8f6f6;
 }
 .table-body tr:nth-child(2n) {
   background-color:#dcdbdb;
 }
 .table-body tr:hover {
-  background-color: #d6f1f3;
+  font-weight: 600;
 }
 
 .table-header {
-  color: #67d5e8;
+  color: var(--primary-accent);
   font-size: 21px;
   font-weight: 600;
   background-color: #6f6e6e;
-  border-bottom: solid 2px #d8d8d8;
+  border-bottom: solid 2px var(--border-medium);
   position: sticky;
   top: 0;
   cursor: pointer;
@@ -223,16 +229,13 @@ onMounted(async () => {
   align-items: center;
   justify-content: space-between;
 } 
-.customers-container {
-  margin-bottom: 80px;
-}
 
 .customers-filter {
   height: 26px;
   min-width: 200px;
-  padding-left: 5px;
-  border: 1px solid gray;
-  border-radius: 5px;
+  padding-left: 6px;
+  border: 1px solid var(--border-medium);
+  border-radius: var(--borderRadius-small);
 }
 
 .pagination-list {
@@ -241,22 +244,29 @@ onMounted(async () => {
   margin-top: 30px;
   gap: 12px;
   justify-content: center;
+  align-items: center;
 }
 .pagination-item {
   list-style: none;
   padding: 12px;
-  background-color: rgba(169, 226, 226, 0.613);
-  border-radius: 8px;
+  font-size: 1.2em;
+  font-weight: 600;
+  color: #aeaeae;
   cursor: pointer;
+}
+.active {
+  color: var(--primary-accent);
+  text-decoration: underline;
+  font-size: 1.5em;
 }
 
 .pgn-icon {
-  color: #baefef;
+  color: var(--primary-accent);
   cursor: pointer;
 }
 
 .pgn-icon--disabled {
-  color: #cbcccc;
+  color: #cdcdcd;
   pointer-events: none;
 }
 

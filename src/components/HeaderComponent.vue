@@ -62,7 +62,7 @@ function toggleDropdown() {
         </div>
       </div>
     </div>
-    <UserMenu 
+    <UserMenu
       class="dropdown-menu"
       @close="closeDropdown"
       v-if="showDropdown"
@@ -102,7 +102,7 @@ function toggleDropdown() {
   justify-content: space-between;
 }
 .header-title {
-  color: #f5bf12;
+  color: var(--secondary-accent);
   font-weight: 700;
   font-size: 20px;
 }
@@ -138,14 +138,13 @@ img {
 }
 .active-link {
   font-weight: 600;
-  color: #02b0cd;
+  color: var(--primary-accent);
   text-decoration: underline;
 }
+
 @media (max-width: 560px) {
   .user-avatar, .header-title {
     display: none;
   }
-
-
 }
 </style>

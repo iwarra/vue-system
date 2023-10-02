@@ -4,8 +4,39 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: "Source Sans Pro"
+}
+
+:root {
+  --primary-light: #fff;
+  --primary-dark: #232323;
+  --primary-accent: #35C3DB; 
+  --secondary-accent: #f5bf12;
+
+  --font-dark: #3e3e3e;
+
+  --border-light: #D0CDCD;
+  --border-medium: #979696;
+  --border-dark: #666;
+  --borderRadius-small: 5px;
+  --borderRadius-large: 10px;
+
+  --spacing-bottom: 80px;
+  --theme-transition: .5s;
 }
 
 h1 {
+  font-weight: normal;
+  font-size: 45px;
   margin-block: 35px;
+}
+
+hr {
+  margin-bottom: 20px;
+}
+
+.container {
+  max-width: 80vw;
+  margin: 0 auto;
+  margin-bottom: var(--spacing-bottom);
 }

@@ -94,18 +94,19 @@ onUnmounted(() => {
 
 <style  scoped>
 .dark {
-  background-color: #333333;;
-  color: white;
+  background-color: var(--primary-dark);;
+  color: var(--primary-light);
+  transition: background-color var(--theme-transition);
   z-index: 1;
-  box-shadow: rgba(225, 224, 224, 0.12) 0px 8px 10px, rgba(225, 224, 224, 0.12) 0px 4px 8px;
-  border: 1px solid #565656;
+  box-shadow: rgba(0, 0, 0, 0.48) 0px 10px 20px, rgba(0, 0, 0, 0.23) -10px 6px 20px ;
+  border-top: .5px solid var(--border-dark);
 }
 .wrapper {
-   position: relative; 
-   z-index: 1;
-   background-color: white;
-   border: 1px solid #ccc;
-   box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+  z-index: 1;
+  background-color: var(--primary-light);
+  transition: background-color var(--theme-transition);
+  border-top: 1px solid var(--border-light);
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
 }
 
 ul {
@@ -126,7 +127,7 @@ a {
   pointer-events: none;
 }
 .active {
-  color: rgb(4, 188, 220);
+  color: var(--primary-accent);
   cursor: pointer;
   pointer-events: auto;
 }

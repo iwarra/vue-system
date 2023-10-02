@@ -35,23 +35,21 @@ onMounted(() => {
 </template>
 
 <style>
-#app {
-  font-family: "Source Sans Pro";
-}
-
 .light-theme {
   min-height: 100vh;
-  background-color: #ffffff;
-  color: #333333;
+  background-color: var(--primary-light);
+  color: var(--font-dark);
   display: flex;
   flex-direction: column;
+  transition: var(--theme-transition);
 }
 .dark-theme {
   min-height: 100vh;
-  background-color: #333333;
-  color: #ffffff;
+  background-color: var(--primary-dark);
+  color: var(--primary-light);
   display: flex;
   flex-direction: column;
+  transition: var(--theme-transition);
 
   .header-wrapper{
     box-shadow: rgba(225, 224, 224, 0.12) 0px 4px 10px;
@@ -63,38 +61,33 @@ onMounted(() => {
 
   .customer-table {
     .table-header {
-      background-color: #212529;
+      background-color: #00000075;
     }
     .table-body .customer-row {
-    transition: background-color 150ms ease-out;
-    background-color: #212529;
+      transition: background-color 250ms ease-out;
+      background-color: #1d1d1d;
     }
     .table-body tr:nth-child(2n) {
-      background-color:#2c3034;
+      background-color:#2d2d2d;
     }
     .table-body tr td {
-      color: rgb(231, 231, 231);
+      color: #E7E7E7;
     }
     .table-name a {
-      color: rgb(231, 231, 231);
+      color: #E7E7E7;
     }
     .table-body tr:hover {
-    background-color: #61a6aa;
+      font-weight: 600;
     }
   };
 
-  .customers-filter {
-    background-color: #333333;
-    color: #ffffff;
+  input,button {
+    background-color: var(--primary-dark);
+    color: var(--primary-light);
   }
 }
 
 .main {
   flex: 1;
-}
-
-h1 {
-  font-weight: normal;
-  font-size: 45px;
 }
 </style>

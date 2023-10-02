@@ -41,8 +41,14 @@ function handleSubmit() {
     <h1 class="login-title">Please log in</h1>
     <form class="login-form" @submit.prevent="handleSubmit">
       <label for="name" class="login-label">Username:</label>
-      <input type="text" id="name" v-model="username" ref="nameInput" class="login-input"/>
-      <span class="error"> {{ errorName }} </span>
+      <input 
+        type="text" 
+        id="name" 
+        v-model="username" 
+        ref="nameInput" 
+        class="login-input"
+      />
+      <span class="login-error"> {{ errorName }} </span>
       <label for="password" class="login-label">Password:</label>
       <input
         id="password"
@@ -51,22 +57,16 @@ function handleSubmit() {
         ref="passwordInput"
         class="login-input"
       />
-      <span class="error"> {{ errorPassword }} </span>
-      <button type="submit" class="btn">Log in</button>
+      <span class="login-error"> {{ errorPassword }} </span>
+      <button type="submit" class="login-btn">Log in</button>
     </form>
   </div>
 </template>
 
-
 <style scoped>
-.container {
-  margin-bottom: 80px;
-  
-  .login-title {
-    text-align: center;
-  }
+.login-title {
+  text-align: center;
 }
-
 
 .login-form {
   display: flex;
@@ -80,31 +80,26 @@ function handleSubmit() {
   }
   
   .login-input {
-    border: 0.5px solid rgb(208, 205, 205);
-    border-radius: 5px;
+    border: 0.5px solid var(--border-light);
+    border-radius: var(--borderRadius-small);
     height: 2.3em;
     padding-inline-start: 0.8em;
     min-width: 50%;
   }
+  .login-btn {
+    border: 0.5px solid var(--border-light);
+    padding: 0.4em 1.6em;
+    border-radius: var(--borderRadius-large);
+    font-size: large;
+    box-shadow: 0px 8px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .login-btn:hover {
+    cursor: pointer;
+  }
+  .login-error {
+    color: #f63d30f9;
+  }
 }
 
-
-.btn {
-  border: 0.5px solid rgb(208, 205, 205);
-  padding: 0.4em 2em;
-  border-radius: 8px;
-  background-color: #ffffff;
-  font-size: large;
-  box-shadow: 0px 8px 10px rgba(0, 0, 0, 0.1);
-}
-
-.btn:hover {
-  cursor: pointer;
-  background-color: #eee;
-  transition: 0.8s;
-}
-
-.error {
-  color: #d33529e3;
-}
 </style>
