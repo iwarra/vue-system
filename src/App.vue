@@ -81,11 +81,12 @@ onMounted(() => {
     }
   };
 
-  input,button {
+  .login-input, .login-btn, .customers-filter {
     background-color: var(--primary-dark);
     color: var(--primary-light);
   }
 }
+
 
 .main {
   flex: 1;
