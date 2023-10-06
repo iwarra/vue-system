@@ -84,10 +84,11 @@ function toggleDropdown() {
   pointer-events: none;
   transform: translateY(-285px); 
   transition: opacity 350ms ease-in-out, transform 350ms ease-in-out, background-color var(--theme-transition); 
+  z-index: 1;
 }
 
 .show {
-  z-index: 3;
+  z-index: 1;
   opacity: 1; 
   pointer-events: auto;
   cursor: pointer;
@@ -96,7 +97,7 @@ function toggleDropdown() {
 
 .header-miniWrap {
   position: relative;
-  z-index: 4;
+  z-index: 2;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
