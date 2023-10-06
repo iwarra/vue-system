@@ -123,9 +123,7 @@ function toggleDropdown() {
   justify-content: space-between;
 }
 .header-title {
-  color: var(--secondary-accent);
-  font-weight: 700;
-  font-size: 20px;
+  display: none;
 }
 
 img {
@@ -134,7 +132,7 @@ img {
 }
 
 .user-avatar {
-  border-radius: 50%;
+  display: none;
 }
 .user-name {
   font-weight: 600;
@@ -155,9 +153,16 @@ img {
   text-decoration: underline;
 }
 
-@media (max-width: 560px) {
-  .user-avatar, .header-title {
-    display: none;
+@media (min-width: 560px) {
+  .user-avatar {
+    display: inline-block;
+    border-radius: 50%;
+  }
+  .header-title {
+    display: inline-block;
+    color: var(--secondary-accent);
+    font-weight: 700;
+    font-size: 20px;
   }
 }
 </style>

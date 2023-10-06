@@ -20,9 +20,10 @@ let currentDate = Date.now();
 <style scoped>
   .footer {
     display: flex;
-    flex-flow: row wrap;
-    justify-content: space-evenly;
-    padding-block: 25px;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+    padding-block: 15px;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 
     .links-list {
@@ -37,12 +38,12 @@ let currentDate = Date.now();
     };
   }
 
-  @media only screen and (max-width: 560px) {
+  @media only screen and (min-width: 560px) {
   .footer {
-    flex-direction: column;
-    gap: 20px;
-    align-items: center;
-    padding-block: 15px;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-evenly;
+    padding-block: 25px;
   }
 }
 </style>

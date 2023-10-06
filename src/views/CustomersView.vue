@@ -180,6 +180,7 @@ onMounted(async () => {
   font-family: Source Sans Pro;
 	width:100%;
   border-collapse: collapse; 
+  margin-top: 40px;
 
   .th-text {
     padding: 10px 8px;
@@ -228,6 +229,7 @@ onMounted(async () => {
   flex-flow: row wrap;
   align-items: center;
   justify-content: space-between;
+  gap: 15px;
 } 
 
 .customers-filter {
@@ -270,9 +272,9 @@ onMounted(async () => {
   pointer-events: none;
 }
 
-@media only screen and (max-width: 625px) {
+@media only screen and (min-width: 650px) {
   .customer-table {
-    margin-top: 40px;
+    margin-top: 0px;
   }
 }
 </style>

@@ -37,6 +37,7 @@ onMounted(() => {
 <style>
 .light-theme {
   min-height: 100vh;
+  min-height: -webkit-fill-available;
   background-color: var(--primary-light);
   color: var(--font-dark);
   display: flex;
@@ -50,6 +51,7 @@ onMounted(() => {
 }
 .dark-theme {
   min-height: 100vh;
+  min-height: -webkit-fill-available;
   background-color: var(--primary-dark);
   color: var(--primary-light);
   display: flex;

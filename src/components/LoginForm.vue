@@ -79,13 +79,6 @@ function handleSubmit() {
     font-size: large;
   }
   
-  .login-input {
-    border: 0.5px solid var(--border-light);
-    border-radius: var(--borderRadius-small);
-    height: 2.3em;
-    padding-inline-start: 0.8em;
-    min-width: 50%;
-  }
   .login-btn {
     border: 0.5px solid var(--border-light);
     padding: 0.4em 1.6em;
@@ -102,4 +95,17 @@ function handleSubmit() {
   }
 }
 
+.login-input {
+    border: 0.5px solid var(--border-light);
+    border-radius: var(--borderRadius-small);
+    height: 2.3em;
+    padding-inline-start: 0.8em;
+    min-width: 75%;
+  }
+
+@media (min-width: 680px) {
+  .login-input {
+    min-width: 50%;
+  }
+}
 </style>
