@@ -42,6 +42,11 @@ onMounted(() => {
   display: flex;
   flex-direction: column;
   transition: var(--theme-transition);
+
+  .header-miniWrap {
+    background-color: var(--primary-light);
+    transition: var(--theme-transition);
+  }
 }
 .dark-theme {
   min-height: 100vh;
@@ -53,6 +58,11 @@ onMounted(() => {
 
   .header-wrapper{
     box-shadow: rgba(225, 224, 224, 0.12) 0px 4px 10px;
+  }
+
+  .header-miniWrap {
+    background-color: var(--primary-dark);
+    transition: var(--theme-transition);
   }
   
   .footer {

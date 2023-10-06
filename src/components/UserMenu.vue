@@ -1,18 +1,22 @@
 <script setup>
-import { onUnmounted, onMounted } from 'vue';
+import { onUnmounted, onMounted, computed } from 'vue';
 import { useThemesStore } from "../stores/themes";
 import { useUserStore } from "../stores/user";
 const emit = defineEmits(['close']);
 const themeStore = useThemesStore();
-
 const userStore = useUserStore();
 const username = userStore.getUsername; 
+const props = defineProps({
+  showDropdown: Boolean
+});
+const linkActivation = computed(() => props.showDropdown);
+
 
 function handleLogOut() {
   userStore.resetUsername();
   userStore.setLogIn(false);
-  //close the menu on log out
   localStorage.removeItem("user");
+  localStorage.removeItem("customer");
   emit("close");
 };
 
@@ -44,7 +48,9 @@ onUnmounted(() => {
   <div :class="[themeStore.getTheme === 'light' ? 'wrapper' : 'dark']">
     <ul class="dropdown-nav">
       <li class="dropdown-item">
-        <span class="dropdown-link active" @click="themeStore.toggleTheme">
+        <span 
+          :class="linkActivation ? 'dropdown-link active' : 'dropdown-link'" 
+          @click="themeStore.toggleTheme">
           <mdicon 
               :name="themeStore.getTheme === 'light'? 'toggle-switch-off-outline' : 'toggle-switch-outline'"
               size="18" 
@@ -58,7 +64,7 @@ onUnmounted(() => {
                 name: 'UserView',
                 params: { username },
               }"
-          class="dropdown-link active"
+          :class="linkActivation ? 'dropdown-link active' : 'dropdown-link'"
           title="User page"
         >
         <mdicon 
@@ -78,7 +84,7 @@ onUnmounted(() => {
       <li class="dropdown-item">
         <router-link
           to="/"
-          class="dropdown-link active"
+          :class="linkActivation ? 'dropdown-link active' : 'dropdown-link'"
           @click="handleLogOut()"
           title="Log out"
         >
@@ -92,20 +98,16 @@ onUnmounted(() => {
   </div>
 </template>
 
-<style  scoped>
+<style scoped>
 .dark {
-  background-color: var(--primary-dark);;
+  background-color: var(--primary-dark);
   color: var(--primary-light);
-  transition: background-color var(--theme-transition);
-  z-index: 1;
-  box-shadow: rgba(0, 0, 0, 0.48) 0px 10px 20px, rgba(0, 0, 0, 0.23) -10px 6px 20px ;
   border-top: .5px solid var(--border-dark);
+  box-shadow: rgba(0, 0, 0, 0.48) 0px 10px 20px, rgba(0, 0, 0, 0.23) -10px 6px 20px ;
 }
 .wrapper {
-  z-index: 1;
   background-color: var(--primary-light);
-  transition: background-color var(--theme-transition);
-  border-top: 1px solid var(--border-light);
+  border-top: .5px solid var(--border-light);
   box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
 }
 

@@ -63,9 +63,9 @@ function toggleDropdown() {
       </div>
     </div>
     <UserMenu
-      class="dropdown-menu"
+      :class=" showDropdown ? 'dropdown-menu show' : 'dropdown-menu' "
       @close="closeDropdown"
-      v-if="showDropdown"
+      :showDropdown = "showDropdown"
     />
   </header>
 </template>
@@ -75,8 +75,28 @@ function toggleDropdown() {
   position: relative;
   box-shadow: rgba(0, 0, 0, 0.12) 0px 3px 8px;
 } 
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  opacity: 0;
+  cursor: not-allowed;
+  pointer-events: none;
+  transform: translateY(-285px); 
+  transition: opacity 350ms ease-in-out, transform 350ms ease-in-out, background-color var(--theme-transition); 
+}
+
+.show {
+  z-index: 3;
+  opacity: 1; 
+  pointer-events: auto;
+  cursor: pointer;
+  transform: translateY(0px);
+}
 
 .header-miniWrap {
+  position: relative;
+  z-index: 4;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -86,7 +106,7 @@ function toggleDropdown() {
 .header-user {
   display: flex;
   flex-direction: row;
-  align-items: end;
+  align-items: center;
   gap: 15px;
 }
 .header-info {
@@ -121,15 +141,7 @@ img {
 .user-title {
   color: #a9aebf;
 }
-.header-user {
-  align-items: center;
-}
 
-.dropdown-menu {
-  position: absolute;
-  top: 100%;
-  right: 0;
-}
 .nav-link {
   margin-right: 10px;
   font-size: 18px;
