@@ -16,7 +16,7 @@ const props = defineProps(["row", "column", "link"]);
 				<strong>
 					<slot></slot>
 				</strong>
-				<ChainIcon class="icon"></ChainIcon>
+				<ChainIcon class="icon-small"></ChainIcon>
 			</router-link>
 			<span>Seats: {{ row.seats }}</span>
 		</div>
@@ -38,11 +38,10 @@ const props = defineProps(["row", "column", "link"]);
 a {
 	text-decoration: none;
 	color: black;
-	
+
 	svg {
 		margin-left: 5px;
 		padding-top: 2px;
 	}
 }
-
 </style>
