@@ -39,10 +39,9 @@ function handleSubmit() {
 <template>
 	<div class="container">
 		<div class="login-wrapper">
-      <div class="login-info">
-        <h1>Please log in</h1>
-        <span>Enter any value to log in.</span>
-      </div>
+			<div class="login-info">
+				<h1>Please log in</h1>
+			</div>
 			<form
 				class="login-form"
 				@submit.prevent="handleSubmit">
@@ -76,11 +75,22 @@ function handleSubmit() {
 					Log in
 				</button>
 			</form>
+			<div class="alert">
+				<span>Enter any value to log in.</span>
+			</div>
 		</div>
 	</div>
 </template>
 
 <style scoped>
+.alert {
+	text-align: center;
+	background-color: rgb(251, 163, 130);
+	padding: 1rem 2rem;
+	border-radius: 8px;
+	width: 300px;
+}
+
 .login-wrapper {
 	display: flex;
 	flex-direction: column;
@@ -89,18 +99,18 @@ function handleSubmit() {
 }
 
 .login-info {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: .5rem;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 0.5rem;
 
-  h1 {
-    margin: 2rem 0 0 0;
-  }
+	h1 {
+		margin: 2rem 0 0 0;
+	}
 
-  span {
-    color: rgb(139, 139, 139);
-  }
+	span {
+		color: rgb(139, 139, 139);
+	}
 }
 
 .login-form {
@@ -108,7 +118,7 @@ function handleSubmit() {
 	flex-direction: column;
 	align-items: center;
 	gap: 0.8em;
-  width: 100%;
+	width: 100%;
 
 	.login-label {
 		font-size: large;

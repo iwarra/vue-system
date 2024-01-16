@@ -1,139 +1,219 @@
 <script setup>
-import { onUnmounted, onMounted, computed } from 'vue';
+import { onUnmounted, onMounted } from "vue";
 import { useThemesStore } from "../stores/themes";
 import { useUserStore } from "../stores/user";
-const emit = defineEmits(['close']);
+import BaseButton from "../components/BaseButton.vue";
+import IconWrapper from "../components/IconWrapper.vue";
+import InboxIcon from "../components/icons/InboxIcon.vue";
+import UserIcon from "../components/icons/UserIcon.vue";
+import ListIcon from "../components/icons/ListIcon.vue";
+import MailIcon from "../components/icons/MailIcon.vue";
+
+const emit = defineEmits(["close"]);
 const themeStore = useThemesStore();
 const userStore = useUserStore();
-const username = userStore.getUsername; 
+const username = userStore.getUsername;
 const props = defineProps({
-  showDropdown: Boolean
+	show: Boolean,
 });
-const linkActivation = computed(() => props.showDropdown);
-
 
 function handleLogOut() {
-  userStore.resetUsername();
-  userStore.setLogIn(false);
-  localStorage.removeItem("user");
-  localStorage.removeItem("customer");
-  emit("close");
-};
+	userStore.resetUsername();
+	userStore.setLogIn(false);
+	localStorage.removeItem("user");
+	emit("close");
+}
+
+// add on click outside
 
 function handleClosingEvent(e) {
-  const parentSpan = e.target.closest('span');
-  const parentLi = e.target.closest('li');
+	const parentSpan = e.target.closest("span");
+	const parentLi = e.target.closest("li");
+	const parentDiv = e.target.closest("div");
+  console.log(e.target)
 
-  if (parentSpan !== null && parentSpan.classList.contains('svg-icon')) {
-    return;
-  }
+	if (parentSpan !== null && parentSpan.classList.contains("svg-icon")) {
+		return;
+	}
 
-  if (parentLi !== null && parentLi.classList.contains('dropdown-item')) {
-    return;
-  }
+	if (parentLi !== null && parentLi.classList.contains("dropdown-item")) {
+		return;
+	}
 
-  emit("close");
-};
-  
+	if (parentDiv !== null && parentDiv.classList.contains("user-container")) {
+		return;
+	}
+
+	emit("close");
+}
+
 onMounted(() => {
-  document.addEventListener('click', handleClosingEvent)
-}) 
+	document.addEventListener("click", handleClosingEvent);
+});
 
 onUnmounted(() => {
-  document.removeEventListener('click', handleClosingEvent)
-}) 
+	document.removeEventListener("click", handleClosingEvent);
+});
 </script>
 
 <template>
-  <div :class="[themeStore.getTheme === 'light' ? 'wrapper' : 'dark']">
-    <ul class="dropdown-nav">
-      <li class="dropdown-item">
-        <span 
-          :class="linkActivation ? 'dropdown-link active' : 'dropdown-link'" 
-          @click="themeStore.toggleTheme">
-          <mdicon 
-              :name="themeStore.getTheme === 'light'? 'toggle-switch-off-outline' : 'toggle-switch-outline'"
-              size="18" 
-          />
-          <span>Toggle Theme</span>
-        </span>
-      </li>
-      <li class="dropdown-item">
-        <router-link 
-          :to="{
-                name: 'UserView',
-                params: { username },
-              }"
-          :class="linkActivation ? 'dropdown-link active' : 'dropdown-link'"
-          title="User page"
-        >
-        <mdicon 
-            name="card-account-details-outline"
-            size="18" />
-          <span class="dropdown-text">Account</span>
-        </router-link>
-      </li>
-      <li class="dropdown-item">
-        <a class="dropdown-link" title="Data personalization (incoming)">
-          <mdicon 
-            name="database-edit-outline"
-            size="20" />
-          <span class="dropdown-text">Data personalization</span>
-        </a>
-      </li>
-      <li class="dropdown-item">
-        <router-link
-          to="/"
-          :class="linkActivation ? 'dropdown-link active' : 'dropdown-link'"
-          @click="handleLogOut()"
-          title="Log out"
-        >
-         <mdicon 
-            name="logout-variant"
-            size="20" />
-          <span class="dropdown-text">Log out</span>
-        </router-link>
-      </li>
-    </ul>
-  </div>
+	<div :class="[themeStore.getTheme === 'light' ? 'wrapper' : 'dark']">
+		<div class="user-container">
+			<img
+				class="user-avatar"
+				src="/user-pic.png"
+				alt="user avatar" />
+			<div class="user-info">
+				<span class="bolder">{{ userStore.username }}</span>
+				<span class="user-title">Guest</span>
+				<div class="user-mail">
+					<MailIcon></MailIcon>
+					<span>info@company.com</span>
+				</div>
+			</div>
+		</div>
+		<hr />
+		<menu class="dropdown-nav">
+			<li>
+				<router-link
+					class="dropdown-item"
+					:to="{
+						name: 'UserView',
+						params: { username },
+					}">
+					<IconWrapper class="icon-wrapper-larger">
+						<UserIcon class="icon-smaller"></UserIcon>
+					</IconWrapper>
+					<div class="link-text">
+						<span class="bolder">My profile</span>
+						<span>Account settings</span>
+					</div>
+				</router-link>
+			</li>
+			<li class="dropdown-item">
+				<IconWrapper class="icon-wrapper-larger">
+					<InboxIcon class="icon-smaller"></InboxIcon>
+				</IconWrapper>
+				<div class="link-text">
+					<span class="bolder">My inbox</span>
+					<span>Message and email</span>
+				</div>
+			</li>
+			<li class="dropdown-item">
+				<IconWrapper class="icon-wrapper-larger">
+					<ListIcon class="icon-smaller"></ListIcon>
+				</IconWrapper>
+				<div class="link-text">
+					<span class="bolder">My tasks</span>
+					<span>To-do and daily tasks</span>
+				</div>
+			</li>
+		</menu>
+		<BaseButton
+			class="secondary"
+			@click="handleLogOut()"
+			>Log out</BaseButton
+		>
+	</div>
 </template>
 
 <style scoped>
 .dark {
-  background-color: var(--primary-dark);
-  color: var(--primary-light);
-  border-top: .5px solid var(--border-dark);
-  box-shadow: rgba(0, 0, 0, 0.48) 0px 10px 20px, rgba(0, 0, 0, 0.23) -10px 6px 20px ;
+	background-color: var(--primary-dark);
+	color: var(--primary-light);
+	border-top: 0.5px solid var(--border-dark);
+	box-shadow: rgba(0, 0, 0, 0.48) 0px 10px 20px,
+		rgba(0, 0, 0, 0.23) -10px 6px 20px;
+	padding: 2rem;
+	display: flex;
+	flex-direction: column;
+	gap: 2rem;
 }
 .wrapper {
-  background-color: var(--primary-light);
-  border-top: .5px solid var(--border-light);
-  box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+	background-color: var(--primary-light);
+	box-shadow: #919eab4d 0 0 2px, #919eab1f 0 12px 24px -4px;
+	border-radius: 4px;
+	padding: 2rem;
+	display: flex;
+	flex-direction: column;
+	gap: 2rem;
 }
 
-ul {
-  list-style: none;
+hr {
+	border: none;
+	height: 1px;
+	background-color: #e5eaef;
 }
+
+.user-container {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 1rem;
+	flex-wrap: wrap;
+	cursor: not-allowed;
+	pointer-events: none;
+}
+
+.user-info {
+	display: flex;
+	flex-direction: column;
+	font-size: 14px;
+	gap: 0.2rem;
+}
+
+.user-avatar {
+	width: 95px;
+}
+
+.user-mail {
+	display: flex;
+	flex-direction: row;
+	gap: 0.3rem;
+	align-items: center;
+}
+
+.icon-smaller {
+	color: var(--primary-accent);
+}
+
+.dropdown-nav {
+	list-style: none;
+	display: flex;
+	flex-direction: column;
+	gap: 2rem;
+	align-items: flex-start;
+}
+
+.dropdown-item {
+	display: flex;
+	flex-direction: row;
+	gap: 1rem;
+}
+
+.bolder {
+	font-weight: 600;
+}
+
+.link-text {
+	display: flex;
+	flex-direction: column;
+	font-size: 14px;
+	justify-content: space-around;
+}
+
 a {
-  text-decoration: none;
+	text-decoration: none;
+	color: black;
 }
 .dropdown-link {
-  display: flex;
-  flex-direction: row;
-  gap: 10px;
-  align-items: center;
-  justify-content: flex-start;
-  color: #5b6791b2;
-  padding: .5rem 1.5rem .8rem 1.5rem;
-  cursor: not-allowed;
-  pointer-events: none;
-}
-.active {
-  color: var(--primary-accent);
-  cursor: pointer;
-  pointer-events: auto;
-}
-.dropdown-nav {
-  padding: 10px;
+	display: flex;
+	flex-direction: row;
+	gap: 1rem;
+	align-items: center;
+	justify-content: flex-start;
+	color: #5b6791b2;
+	cursor: not-allowed;
+	pointer-events: none;
 }
 </style>

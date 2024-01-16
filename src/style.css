@@ -1,42 +1,123 @@
-@import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700');
+@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap");
 
 * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: "Source Sans Pro"
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	font-family: "Plus Jakarta Sans", sans-serif;
+}
+
+img {
+	max-width: 100%;
 }
 
 :root {
-  --primary-light: #fff;
-  --primary-dark: #232323;
-  --primary-accent: #35C3DB; 
-  --secondary-accent: #f5bf12;
+	--primary-light: #fff;
+	--primary-dark: #232323;
+	--primary-accent: #5d87ff;
+	--secondary-accent: #d194a5;
 
-  --font-dark: #3e3e3e;
+	--font-dark: #3e3e3e;
 
-  --border-light: #D0CDCD;
-  --border-medium: #979696;
-  --border-dark: #666;
-  --borderRadius-small: 5px;
-  --borderRadius-large: 10px;
+	--border-light: #d0cdcd;
+	--border-medium: #979696;
+	--border-dark: #666;
+	--borderRadius-small: 5px;
+	--borderRadius-large: 10px;
 
-  --spacing-bottom: 80px;
-  --theme-transition: .5s;
+	--spacing-bottom: 80px;
+	--theme-transition: 0.5s;
 }
 
 h1 {
-  font-weight: normal;
-  font-size: 45px;
-  margin-block: 35px;
+	font-weight: 600;
+	font-size: 1.5rem;
 }
 
-hr {
-  margin-bottom: 20px;
+h2 {
+	font-size: 1rem;
+	font-weight: 600;
 }
 
-.container {
-  max-width: 80vw;
-  margin: 0 auto;
-  margin-bottom: var(--spacing-bottom);
+h3 {
+	font-size: 1.5rem;
+	font-weight: normal;
+}
+
+.page-positioning {
+	max-width: 1300px;
+	padding-inline: 2rem;
+	align-self: center;
+}
+
+select {
+	font-family: inherit;
+	font-size: inherit;
+	height: 2.8rem;
+	border-radius: var(--borderRadius-small);
+	padding-inline: 10px;
+	min-width: 3ch;
+	max-width: min-content;
+	width: 5rem;
+	outline: 1px solid #dee2e7;
+	border: none;
+	background-color: transparent;
+	cursor: pointer;
+}
+
+input[type="password"],
+input[type="text"] {
+	height: 2.8rem;
+	border-radius: var(--borderRadius-small);
+	padding-left: 6px;
+	min-width: 0;
+	width: 16rem;
+	outline: 1px solid #dee2e7;
+	border: none;
+}
+
+select:hover,
+input[type="password"]:hover,
+input[type="text"]:hover {
+	outline: 1px solid #808285;
+}
+
+select:focus,
+input[type="password"]:focus,
+input[type="text"]:focus {
+	outline: 2px solid #5c86fe;
+}
+
+input[type="file"] {
+	width: 20ch;
+	align-self: center;
+}
+
+input::file-selector-button {
+	cursor: pointer;
+	padding-block: 0.6rem;
+	padding-inline: 1rem;
+	border-radius: 8px;
+	border: none;
+	background-color: var(--primary-accent);
+	color: white;
+}
+
+.flex-grow {
+	flex: 1;
+}
+
+.icon {
+	width: 2rem;
+	height: 2rem;
+}
+
+.icon-smaller {
+	width: 25px;
+	height: 25px;
+}
+
+.icon-larger {
+	width: 40px;
+	height: 40px;
 }

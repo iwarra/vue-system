@@ -5,17 +5,33 @@ Backend ideas:
 
 
 NEW:
-- Breadcrumbs 
-- Refactor user menu 
-- Active link in header doesn't work
-- Purchase SVG images
-- BaseCard and DualCard components 
-- Fill new version of cards with info
-- User page inspo - add dummy components and user info card 
-- Images sizing in card
 
+* Header:
+  - redesign
+  - new logo
+* User menu:
+  - animation
+- Login page
+- dark theme update / solution for cards with background, links, table details etc...
+
+- Breadcrumbs
+- Refactor routing !!!
+- Find good SVG images
 - skeleton instead of a loader
+
 - images (names and folder)
 - remove unnecessary things like stores, controller funcs etc.
-- dark theme update
-- new logo
+
+
+* User page:
+  - Add colorful cards at the bottom - DONE
+  - Add buttons at the bottom of the page - DONE
+- Table sizing at the bottom - DONE
+- OVERFLOW in home - DONE 
+- Card slots positioning - DONE
+- IconWrapper background-color solution - DONE
+- Single customer page - DONE
+- Footer delete - DONE
+* Cards: 
+  - Image sizing - DONE
+  - Headings - DONE
