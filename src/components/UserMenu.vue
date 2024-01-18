@@ -47,7 +47,7 @@ onUnmounted(() => {
 				alt="user avatar" />
 			<div class="user-info">
 				<span class="bold">{{ userStore.username }}</span>
-				<span class="user-title">Guest</span>
+				<span class="user-title">Web developer</span>
 				<div class="user-mail">
 					<MailIcon></MailIcon>
 					<span>{{ userStore.username }}@company.com</span>
