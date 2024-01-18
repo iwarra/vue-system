@@ -1,8 +1,8 @@
 import { createRouter, createWebHistory } from "vue-router";
 import ReportView from "../views/ReportView.vue";
-import CustomersView from "../views/CustomersView.vue";
-import UserView from "../views/UserView.vue";
-import SingleCustomerView from "../views/SingleCustomerView.vue";
+const SingleCustomerView = () => import("../views/SingleCustomerView.vue");
+const UserView = () => import("../views/UserView.vue");
+const CustomersView = () => import("../views/CustomersView.vue");
 import { useUserStore } from "../stores/user";
 
 const routes = [
@@ -18,7 +18,7 @@ const routes = [
 	},
 	{
 		name: "SingleCustomerView",
-		path: "/customer/:id",
+		path: "/customers/:name",
 		component: SingleCustomerView,
 	},
 	{
