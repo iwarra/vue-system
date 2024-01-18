@@ -125,73 +125,48 @@ const totalSeats = computed(() => {
 				<ChartComponent />
 			</div>
 
-			<div class="monthly-sales">
-				<div class="monthly-row">
-					<Card
-						class="grow"
-						headerClass="flex-grow">
-						<template #header>
-							<IconWrapper
-								style="
-									background-color: color-mix(in srgb, #fa9175 15%, #ffffff5b);
-								">
-								<DottedCircleIcon
-									class="icon"
-									style="color: #fa9175"></DottedCircleIcon>
-							</IconWrapper>
-						</template>
-						<template #main>
-							<h2>Top month</h2>
-							<strong>March 2023</strong>
-						</template>
-					</Card>
-					<Card
-						class="grow"
-						mainClass="flex-grow">
-						<template #main>
-							<h2>Sales profit</h2>
-							<strong>240k</strong>
-						</template>
-						<template #footer>
-							<div class="card-footer">
-								<IconWrapper
-									style="
-										background-color: color-mix(
-											in srgb,
-											#64c7ff 15%,
-											#ffffff5b
-										);
-									">
-									<CurrencyIcon
-										style="color: #64c7ff"
-										class="icon" />
-								</IconWrapper>
-								<span>+12%</span>
-							</div>
-						</template>
-					</Card>
-				</div>
-				<!-- <Card class="grow">
-					<template #footer>
-						 <div class="stats">
-							<img
-								class="pie-chart"
-								src="/pie-1.svg"
-								alt="" />
-							<img
-								class="pie-chart"
-								src="/pie-2.svg"
-								alt="" />
-							<img
-								class="pie-chart"
-								src="/pie-3.svg"
-								alt="" />
-						</div> 
+			<div class="overview">
+				<!-- <div class="monthly-row"> -->
+				<Card
+					class="grow"
+					headerClass="flex-grow">
+					<template #header>
+						<IconWrapper
+							style="
+								background-color: color-mix(in srgb, #fa9175 15%, #ffffff5b);
+							">
+							<DottedCircleIcon
+								class="icon"
+								style="color: #fa9175"></DottedCircleIcon>
+						</IconWrapper>
 					</template>
 					<template #main>
-						<h2>Weekly stats</h2>
+						<h2>Top month</h2>
+						<strong>March 2023</strong>
 					</template>
-				</Card> -->
+				</Card>
+				<Card
+					class="grow"
+					mainClass="flex-grow">
+					<template #main>
+						<h2>Sales profit</h2>
+						<strong>240k</strong>
+					</template>
+					<template #footer>
+						<div class="card-footer">
+							<IconWrapper
+								style="
+									background-color: color-mix(in srgb, #64c7ff 15%, #ffffff5b);
+								">
+								<CurrencyIcon
+									style="color: #64c7ff"
+									class="icon" />
+							</IconWrapper>
+							<span>+12%</span>
+						</div>
+					</template>
+				</Card>
+				<!-- </div> -->
 			</div>
 		</template>
 	</div>
@@ -222,17 +197,20 @@ const totalSeats = computed(() => {
 
 .monthly-sales {
 	display: flex;
-	flex-direction: column;
+	flex-direction: row;
 	flex-wrap: wrap;
 	gap: 1rem;
-	flex: 1 0 40%;
+
+	& > * {
+		flex: 1 0 50%;
+	}
 }
 
-.monthly-row {
+/* .monthly-row {
 	display: flex;
 	flex-wrap: wrap;
 	gap: 1rem;
-}
+} */
 
 .stats {
 	display: flex;
