@@ -23,11 +23,13 @@ onMounted(() => {
 </script>
 
 <template>
-	<div :class="[themesStore.theme === 'light' ? 'light-theme' : 'dark-theme']">
-		<HeaderComponent />
+	<LoginForm v-if="!userStore.isLoggedIn" />
+	<div
+		v-else
+		:class="[themesStore.theme === 'light' ? 'light-theme' : 'dark-theme']">
+		<HeaderComponent v-if="userStore.isLoggedIn" />
 		<main class="app-main page-positioning">
-			<LoginForm v-if="!userStore.isLoggedIn" />
-			<HomePage v-else />
+			<HomePage />
 		</main>
 	</div>
 </template>
@@ -46,11 +48,15 @@ onMounted(() => {
 		background-color: var(--primary-light);
 		transition: var(--theme-transition);
 	}
+
+	a {
+		color: black;
+	}
 }
 .dark-theme {
 	min-height: 100vh;
 	min-height: -webkit-fill-available;
-	background-color: var(--primary-dark);
+	background-color: var(--dark-theme-background);
 	color: var(--primary-light);
 	display: flex;
 	flex-direction: column;
@@ -61,13 +67,43 @@ onMounted(() => {
 	}
 
 	.header-content {
-		background-color: var(--primary-dark);
+		background-color: var(--dark-theme-background);
 		transition: var(--theme-transition);
 	}
 
-	/* .customer-table {
-	
-	} */
+	.heading-card,
+	.welcome {
+		background-color: color-mix(in srgb, #ecf2ff 60%, #253662) !important;
+	}
+
+	.wrapper {
+		background-color: var(--dark-theme-background);
+		color: var(--primary-light);
+		box-shadow: 0 5px 5px -3px #0003,0 8px 10px 1px #00000024,0 3px 14px 2px #0000001f;
+	}
+
+	.secondary {
+		background-color: var(--dark-theme-background);
+	}
+
+	a {
+		color: white !important;
+	}
+
+	input[type="password"],
+	input[type="text"],
+	select {
+		background-color: var(--dark-theme-background);
+		color: var(--primary-light);
+	}
+
+	.color {
+		opacity: 0.85;
+	}
+
+	thead {
+		background-color: var(--dark-theme-background) !important;
+	}
 
 	.login-input,
 	.login-btn,
