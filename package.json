@@ -4,14 +4,12 @@
 	"version": "0.0.0",
 	"type": "module",
 	"scripts": {
-		"dev": "vite",
+		"dev": "vite --host",
 		"build": "vite build",
 		"preview": "vite preview"
 	},
 	"dependencies": {
-		"@mdi/js": "^7.2.96",
 		"chart.js": "^4.4.0",
-		"mdi-vue": "^3.0.13",
 		"pinia": "^2.1.6",
 		"vue": "latest",
 		"vue-chartjs": "^5.2.0",
