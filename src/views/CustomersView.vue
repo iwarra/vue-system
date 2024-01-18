@@ -1,13 +1,16 @@
 <script setup>
 import { ref, computed, watch } from "vue";
-import LoadingSpinner from "../components/LoadingSpinner.vue";
+import { useCustomers } from "../utils/useCustomers.js";
+import { splitArrayBy, sortArrayBy } from "../controller/helperFunctions";
 import Card from "../components/cards/Card.vue";
 import SelectContainer from "../components/SelectContainer.vue";
 import SelectOptions from "../components/SelectOptions.vue";
 import TableTd from "../components/TableTd.vue";
 import TableTh from "../components/TableTh.vue";
-import { splitArrayBy, sortArrayBy } from "../controller/helperFunctions";
 import TwoColumns from "../components/cards/TwoColumns.vue";
+import ArrowLeftIcon from "../components/icons/ArrowLeftIcon.vue";
+import ArrowRightIcon from "../components/icons/ArrowRightIcon.vue";
+import CustomersLoader from "../components/loaders/CustomersLoader.vue";
 
 const columnSorted = ref({ by: "id", sortingOrder: "ascending" });
 const itemsPerPage = [5, 10, 20];
@@ -22,6 +25,7 @@ const toNumOfRows = ref(null);
 const numOfRowsTotal = computed(() => customers.value.flat().length);
 
 const sortBy = computed(() => {
+	console.log(columnSorted.value.sortingOrder)
 	return columnSorted.value.sortingOrder === "ascending"
 		? "descending"
 		: "ascending";
@@ -78,18 +82,14 @@ function getCustomers() {
 	}
 
 	if (!initialData.value) {
-		const BASE_URL = "https://startdeliver-mock-api.glitch.me";
-		const endpoint = "customer";
-		fetch(`${BASE_URL}/${endpoint}`)
-			.then((res) => res.json())
-			.then((res) => {
-				const splittedArray = splitArrayBy(
-					selected.value,
-					sortArrayBy(res, columnSorted.value),
-				);
-				customersProxy.value = splittedArray;
-				initialData.value = splittedArray;
-			});
+		useCustomers().then((res) => {
+			const splittedArray = splitArrayBy(
+				selected.value,
+				sortArrayBy(res, columnSorted.value),
+			);
+			customersProxy.value = splittedArray;
+			initialData.value = splittedArray;
+		});
 	}
 	return customersProxy;
 }
@@ -97,7 +97,7 @@ function getCustomers() {
 
 <template>
 	<div class="container">
-		<LoadingSpinner v-if="!customers" />
+		<CustomersLoader v-if="!customers"></CustomersLoader>
 		<template v-else>
 			<TwoColumns class="heading-card">
 				<template #left-col>
@@ -112,7 +112,7 @@ function getCustomers() {
 					<Card>
 						<template #main>
 							<img
-								src="/tablet.png"
+								src="/mock-data.png"
 								alt="" />
 						</template>
 					</Card>
@@ -185,30 +185,24 @@ function getCustomers() {
 						</select>
 					</SelectContainer>
 					<div class="navigation">
-						<div>
-							<span
-								>{{ fromNumOfRows }} - {{ toNumOfRows }} of
-								{{ numOfRowsTotal }}</span
-							>
-						</div>
-						<div>
-							<mdicon
-								name="menu-left"
-								role="button"
-								size="50"
-								:class="pageNr === 0 ? 'pgn-icon--disabled' : 'pgn-icon'"
-								@click="handlePagination('left')" />
-							<mdicon
-								name="menu-right"
-								role="button"
-								size="50"
-								:class="
-									pageNr === customers.length - 1
-										? 'pgn-icon--disabled'
-										: 'pgn-icon'
-								"
-								@click="handlePagination('right')" />
-						</div>
+						<ArrowLeftIcon
+							role="button"
+							class="icon-small"
+							@click="handlePagination('left')"
+							:class="pageNr === 0 ? 'pgn-icon--disabled' : 'pgn-icon'" />
+						<span
+							>{{ fromNumOfRows }} - {{ toNumOfRows }} of
+							{{ numOfRowsTotal }}</span
+						>
+						<ArrowRightIcon
+							role="button"
+							class="icon-small"
+							:class="
+								pageNr === customers.length - 1
+									? 'pgn-icon--disabled'
+									: 'pgn-icon'
+							"
+							@click="handlePagination('right')" />
 					</div>
 				</div>
 			</div>
@@ -307,6 +301,7 @@ function getCustomers() {
 
 .navigation {
 	display: flex;
+	gap: 1rem;
 	align-items: center;
 	order: 2;
 }

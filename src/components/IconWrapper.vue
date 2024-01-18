@@ -8,7 +8,6 @@
 
 <style scoped>
 .style-container {
-		background-color: #97d6fa42;
 		width: 40px;
 		height: 40px;
 		border-radius: 7px;

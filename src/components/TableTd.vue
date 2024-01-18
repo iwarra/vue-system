@@ -12,7 +12,11 @@ const props = defineProps(["row", "column", "link"]);
 			v-if="link"
 			class="name-cell"
 			@click="() => (customer = row)">
-			<router-link :to="{ name: link.name, params: { id: row.id } }">
+			<router-link
+				:to="{
+					name: link.name,
+					params: { name: row.name.replaceAll(' ', '-').toLowerCase() },
+				}">
 				<strong>
 					<slot></slot>
 				</strong>

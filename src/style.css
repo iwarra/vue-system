@@ -14,10 +14,12 @@ img {
 :root {
 	--primary-light: #fff;
 	--primary-dark: #232323;
+	--dark-theme-background: #2a3447;
 	--primary-accent: #5d87ff;
 	--secondary-accent: #d194a5;
 
 	--font-dark: #3e3e3e;
+	--font-lighter: rgb(119, 119, 119);
 
 	--border-light: #d0cdcd;
 	--border-medium: #979696;
@@ -107,22 +109,31 @@ input::file-selector-button {
 	flex: 1;
 }
 
-.icon {
-	width: 2rem;
-	height: 2rem;
-}
-
-.icon-smaller {
-	width: 25px;
-	height: 25px;
-}
-
 .icon-small {
 	width: 20px;
 	height: 20px;
 }
-
+.icon-smaller {
+	width: 25px;
+	height: 25px;
+}
+.icon {
+	width: 32px;
+	height: 32px;
+}
 .icon-larger {
 	width: 40px;
 	height: 40px;
+}
+
+.primaryColor {
+	color: var(--primary-accent);
+}
+
+.bolder {
+	font-weight: 500;
+}
+
+.bold {
+	font-weight: 600;
 }

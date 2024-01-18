@@ -4,6 +4,8 @@ import { useUserStore } from "../stores/user";
 import { ref } from "vue";
 import UserMenu from "./UserMenu.vue";
 import LogoIcon from "../components/icons/LogoIcon.vue";
+import SunIcon from "../components/icons/SunIcon.vue";
+import MoonIcon from "../components/icons/MoonIcon.vue";
 
 const userStore = useUserStore();
 const themeStore = useThemesStore();
@@ -12,24 +14,15 @@ let isMenuVisible = ref(false);
 function closeDropdown() {
 	isMenuVisible.value = false;
 }
-
-function toggleDropdown() {
-	isMenuVisible.value = !isMenuVisible.value;
-}
 </script>
 
 <template>
 	<header class="header-wrapper">
 		<div class="page-positioning">
 			<div class="header-content">
-				<div
-					:class="[
-						userStore.username.length > 0
-							? 'header-info'
-							: 'header-info--loggedOut',
-					]">
-					<div class="header-title">
-						<LogoIcon></LogoIcon>
+				<div class="header-info">
+					<div class="header-logo">
+						<LogoIcon class="logo"></LogoIcon>
 						<span>Dash</span>
 					</div>
 					<nav
@@ -50,40 +43,25 @@ function toggleDropdown() {
 						>
 					</nav>
 				</div>
-				<div style="display: flex; gap: 2rem">
-					<span @click="themeStore.toggleTheme">
-						<!-- <mdicon
-							:name="
-								themeStore.getTheme === 'light'
-									? 'toggle-switch-off-outline'
-									: 'toggle-switch-outline'
-							"
-							size="40" /> -->
-					</span>
-					<div v-if="userStore.isLoggedIn">
-						<div class="header-user">
-							<img
-								class="user-avatar"
-								src="/user-pic.png"
-								alt="user avatar" />
-							<div>
-								<mdicon
-									v-if="!isMenuVisible"
-									@click="toggleDropdown"
-									name="triangle-down-outline"
-									class="svg-icon"
-									size="15" />
-								<mdicon
-									v-if="isMenuVisible"
-									@click="toggleDropdown"
-									name="triangle-outline"
-									size="15" />
-							</div>
-							<UserMenu
-								:class="isMenuVisible ? 'dropdown-menu show' : 'dropdown-menu'"
-								@close="closeDropdown"
-								:show="isMenuVisible" />
-						</div>
+				<div class="header-icons">
+					<SunIcon
+						v-if="themeStore.getTheme === 'light'"
+						class="icon-smaller light"
+						@click="themeStore.toggleTheme"></SunIcon>
+					<MoonIcon
+						v-if="themeStore.getTheme === 'dark'"
+						class="icon-smaller dark"
+						@click="themeStore.toggleTheme"></MoonIcon>
+					<div class="header-user">
+						<img
+							@click="isMenuVisible = !isMenuVisible"
+							class="user-avatar"
+							src="/user-pic.png"
+							alt="user avatar" />
+						<UserMenu
+							class="dropdown-menu"
+							:class="{ show: isMenuVisible }"
+							@close="closeDropdown" />
 					</div>
 				</div>
 			</div>
@@ -92,15 +70,6 @@ function toggleDropdown() {
 </template>
 
 <style scoped>
-.header-wrapper {
-	position: relative;
-	box-shadow: rgba(0, 0, 0, 0.12) 0px 3px 8px;
-}
-
-.page-positioning {
-	margin: 0 auto;
-}
-
 .dropdown-menu {
 	position: absolute;
 	width: 350px;
@@ -108,7 +77,6 @@ function toggleDropdown() {
 	right: -10px;
 	cursor: not-allowed;
 	pointer-events: none;
-	z-index: 1;
 	opacity: 0;
 	transition-property: top, right, opacity;
 	transition-duration: 0.2s;
@@ -118,70 +86,94 @@ function toggleDropdown() {
 .show {
 	top: calc(100% + 10px);
 	right: 0px;
-	z-index: 2;
 	pointer-events: auto;
 	cursor: pointer;
+	padding: 2rem;
 	opacity: 1;
 	transition-property: top, right, opacity;
 	transition-duration: 0.2s;
 	transition-timing-function: cubic-bezier(0.68, -0.55, 0.265, 1.55);
 }
-
-.header-content {
+.page-positioning {
+	margin: 0 auto;
+}
+.header-wrapper {
+	box-shadow: #0000000d 0 9px 17.5px;
 	position: relative;
 	z-index: 2;
+}
+
+.header-content {
 	display: flex;
 	flex-direction: row;
+	gap: 1rem;
+	flex-wrap: wrap;
+	align-items: center;
 	justify-content: space-between;
-	padding: 16px 0px 12px 0px;
+	padding-block: 1.5rem;
 }
+
 .header-info,
 .header-user {
 	position: relative;
 	display: flex;
 	flex-direction: row;
 	align-items: center;
-	gap: 15px;
+	gap: 1.5rem;
 }
 .header-info {
 	flex-wrap: wrap;
 }
 
-.header-info--loggedOut {
-	width: 100%;
+.header-logo {
 	display: flex;
-	flex-direction: row;
-	align-items: end;
-	gap: 15px;
-	justify-content: space-between;
-}
-.header-title {
-	display: flex;
-	gap: .5rem;
+	gap: 0.5rem;
 	font-weight: 600;
 	font-size: 24px;
 }
 
-img {
-	width: 50px;
-	height: 50px;
+.logo {
+	color: #49beff;
+}
+
+.header-icons {
+	display: flex;
+	gap: 1.5rem;
+	align-items: center;
+}
+
+.dark {
+	color: #f2f1e6;
+	cursor: pointer;
+}
+
+.light {
+	color: #f5bb00;
+	cursor: pointer;
 }
 
 .user-avatar {
-	display: none;
+	/* border-radius: 50%; */
+	height: 24px;
+	width: 24px;
+	cursor: pointer;
 }
-.user-name {
-	font-weight: 600;
+
+.light:hover,
+.dark:hover,
+.user-avatar:hover {
+	opacity: 0.9;
 }
-.user-title {
-	color: #a9aebf;
+
+.header-nav {
+	display: flex;
+	gap: 0.8rem;
 }
 
 .nav-link {
-	margin-right: 10px;
-	font-size: 18px;
+	font-size: 0.95rem;
 	text-decoration: none;
-	color: #797d8b;
+	color: rgba(0, 0, 0, 0.87);
 }
 .active-link {
 	font-weight: 600;
@@ -189,12 +181,20 @@ img {
 	text-decoration: underline;
 }
 
-@media (min-width: 560px) {
-	.user-avatar {
-		display: inline-block;
-		border-radius: 50%;
-		height: 28px;
-		width: 28px;
+@media (max-width: 500px) {
+	.header-info,
+	.header-user {
+		gap: 1rem;
+	}
+
+	.header-logo {
+		span {
+			display: none;
+		}
+	}
+
+	.show {
+		max-width: 85svw;
 	}
 }
 </style>

@@ -13,9 +13,6 @@ const emit = defineEmits(["close"]);
 const themeStore = useThemesStore();
 const userStore = useUserStore();
 const username = userStore.getUsername;
-const props = defineProps({
-	show: Boolean,
-});
 
 function handleLogOut() {
 	userStore.resetUsername();
@@ -24,25 +21,10 @@ function handleLogOut() {
 	emit("close");
 }
 
-// add on click outside
-
 function handleClosingEvent(e) {
-	const parentSpan = e.target.closest("span");
-	const parentLi = e.target.closest("li");
-	const parentDiv = e.target.closest("div");
-  console.log(e.target)
+	const headerUser = document.querySelector(".header-user");
 
-	if (parentSpan !== null && parentSpan.classList.contains("svg-icon")) {
-		return;
-	}
-
-	if (parentLi !== null && parentLi.classList.contains("dropdown-item")) {
-		return;
-	}
-
-	if (parentDiv !== null && parentDiv.classList.contains("user-container")) {
-		return;
-	}
+	if (headerUser.contains(e.target)) return;
 
 	emit("close");
 }
@@ -57,45 +39,47 @@ onUnmounted(() => {
 </script>
 
 <template>
-	<div :class="[themeStore.getTheme === 'light' ? 'wrapper' : 'dark']">
+	<div class="wrapper">
 		<div class="user-container">
 			<img
-				class="user-avatar"
+				class="user-picture"
 				src="/user-pic.png"
 				alt="user avatar" />
 			<div class="user-info">
-				<span class="bolder">{{ userStore.username }}</span>
+				<span class="bold">{{ userStore.username }}</span>
 				<span class="user-title">Guest</span>
 				<div class="user-mail">
 					<MailIcon></MailIcon>
-					<span>info@company.com</span>
+					<span>{{ userStore.username }}@company.com</span>
 				</div>
 			</div>
 		</div>
 		<hr />
 		<menu class="dropdown-nav">
 			<li>
-				<router-link
+				<div
 					class="dropdown-item"
-					:to="{
-						name: 'UserView',
-						params: { username },
-					}">
+					@click="
+						$router.push({
+							name: 'UserView',
+							params: { username },
+						})
+					">
 					<IconWrapper class="icon-wrapper-larger">
 						<UserIcon class="icon-smaller"></UserIcon>
 					</IconWrapper>
 					<div class="link-text">
-						<span class="bolder">My profile</span>
+						<span class="bold">My profile</span>
 						<span>Account settings</span>
 					</div>
-				</router-link>
+				</div>
 			</li>
 			<li class="dropdown-item">
 				<IconWrapper class="icon-wrapper-larger">
 					<InboxIcon class="icon-smaller"></InboxIcon>
 				</IconWrapper>
 				<div class="link-text">
-					<span class="bolder">My inbox</span>
+					<span class="bold">My inbox</span>
 					<span>Message and email</span>
 				</div>
 			</li>
@@ -104,7 +88,7 @@ onUnmounted(() => {
 					<ListIcon class="icon-smaller"></ListIcon>
 				</IconWrapper>
 				<div class="link-text">
-					<span class="bolder">My tasks</span>
+					<span class="bold">My tasks</span>
 					<span>To-do and daily tasks</span>
 				</div>
 			</li>
@@ -118,17 +102,6 @@ onUnmounted(() => {
 </template>
 
 <style scoped>
-.dark {
-	background-color: var(--primary-dark);
-	color: var(--primary-light);
-	border-top: 0.5px solid var(--border-dark);
-	box-shadow: rgba(0, 0, 0, 0.48) 0px 10px 20px,
-		rgba(0, 0, 0, 0.23) -10px 6px 20px;
-	padding: 2rem;
-	display: flex;
-	flex-direction: column;
-	gap: 2rem;
-}
 .wrapper {
 	background-color: var(--primary-light);
 	box-shadow: #919eab4d 0 0 2px, #919eab1f 0 12px 24px -4px;
@@ -139,20 +112,14 @@ onUnmounted(() => {
 	gap: 2rem;
 }
 
-hr {
-	border: none;
-	height: 1px;
-	background-color: #e5eaef;
-}
-
 .user-container {
 	display: flex;
 	align-items: center;
 	justify-content: center;
 	gap: 1rem;
 	flex-wrap: wrap;
-	cursor: not-allowed;
-	pointer-events: none;
+	/* cursor: not-allowed;
+	pointer-events: none; */
 }
 
 .user-info {
@@ -162,7 +129,14 @@ hr {
 	gap: 0.2rem;
 }
 
-.user-avatar {
+hr {
+	border: none;
+	height: 1px;
+	background-color: #e5eaef;
+}
+
+.user-picture {
+	display: unset;
 	width: 95px;
 }
 
@@ -191,8 +165,12 @@ hr {
 	gap: 1rem;
 }
 
-.bolder {
-	font-weight: 600;
+.icon-smaller {
+	color: #64c7ff;
+}
+
+.icon-wrapper-larger {
+	background-color: color-mix(in srgb, #64c7ff 15%, #ffffff5b);
 }
 
 .link-text {
@@ -213,7 +191,17 @@ a {
 	align-items: center;
 	justify-content: flex-start;
 	color: #5b6791b2;
-	cursor: not-allowed;
-	pointer-events: none;
+	/* cursor: not-allowed;
+	pointer-events: none; */
+}
+
+@media (max-width: 500px) {
+	.user-picture {
+		display: none;
+	}
+
+	.user-container {
+		justify-content: flex-start;
+	}
 }
 </style>

@@ -25,7 +25,7 @@ const username = userStore.getUsername;
 				<Card>
 					<template #main>
 						<img
-							src="/user-info.png"
+							src="/profile-header.png"
 							alt="" />
 					</template>
 				</Card>
@@ -74,33 +74,33 @@ const username = userStore.getUsername;
 		</Card>
 
 		<div class="account-info">
-			<Card style="background-color: #ecf2ff">
+			<Card
+				class="color"
+				style="background-color: #ecf2ff; color: #9b99fe">
 				<template #header>
-					<DottedCircleIcon
-						class="icon-larger"
-						style="color: #a1a0ff" />
+					<DottedCircleIcon class="icon-larger" />
 				</template>
 				<template #main>
 					<span>Member since</span>
 					<strong>05/08/2020</strong>
 				</template>
 			</Card>
-			<Card style="background-color: #fef5e5">
+			<Card
+				class="color"
+				style="background-color: #fef5e5; color: #ffae1f">
 				<template #header>
-					<CoinsIcon
-						class="icon-larger"
-						style="color: #ffae1f" />
+					<CoinsIcon class="icon-larger" />
 				</template>
 				<template #main>
 					<span>Credits left</span>
 					<strong>7</strong>
 				</template>
 			</Card>
-			<Card style="background-color: #e8f7ff">
+			<Card
+				class="color"
+				style="background-color: #e8f7ff; color: #43bcfd">
 				<template #header>
-					<UserIcon
-						class="icon-larger"
-						style="color: #49beff" />
+					<UserIcon class="icon-larger" />
 				</template>
 				<template #main>
 					<span>Membership status</span>

@@ -1,12 +1,31 @@
 <script setup>
 import { inject } from "vue";
+import { useRoute } from "vue-router";
 import { formatter } from "../controller/helperFunctions";
 import Card from "../components/cards/Card.vue";
 import TwoColumns from "../components/cards/TwoColumns.vue";
 import DottedCircleIcon from "../components/icons/DottedCircleIcon.vue";
 import UserIcon from "../components/icons/UserIcon.vue";
 import CoinsIcon from "../components/icons/CoinsIcon.vue";
-const customer = inject("customer");
+const route = useRoute();
+const injected = inject("customer").value;
+const customer = {
+	arr: injected.arr ?? 200_000,
+	seats: injected.seats ?? 66,
+	createdAt: injected.createdAt ?? "2013-05-23",
+};
+
+const capitalizeWords = (str) =>
+	str.replace(/\b\w/g, (char) => char.toUpperCase());
+
+const breadcrumbs = route.fullPath
+	.substring(1)
+	.split("/")
+	.map((path) => {
+		return capitalizeWords(path.replaceAll("-", " "));
+	});
+
+const customerName = breadcrumbs.at(-1);
 </script>
 
 <template>
@@ -15,8 +34,25 @@ const customer = inject("customer");
 			<template #left-col>
 				<Card>
 					<template #main>
-						<h1>{{ customer.name }}</h1>
-						<span>Welcome to customers page!</span>
+						<div class="breadcrumbs">
+							<span
+								key="route"
+								class="light"
+								v-for="(route, index) in breadcrumbs">
+								<div v-if="index !== breadcrumbs.length - 1">
+									<router-link :to="{ name: route.toLowerCase() }">
+										{{ route }}
+									</router-link>
+									<span class="divider">/</span>
+								</div>
+								<span
+									v-else
+									class="bolder"
+									>{{ route }}</span
+								>
+							</span>
+						</div>
+						<h1>{{ customerName }}</h1>
 					</template>
 				</Card>
 			</template>
@@ -24,7 +60,7 @@ const customer = inject("customer");
 				<Card>
 					<template #main>
 						<img
-							src="/pie.png"
+							src="/customer-header.png"
 							alt="" />
 					</template>
 				</Card>
@@ -32,33 +68,33 @@ const customer = inject("customer");
 		</TwoColumns>
 
 		<div class="customer-info">
-			<Card style="background-color: #fef5e5">
+			<Card
+				class="color"
+				style="background-color: #fef5e5; color: #ffae1f">
 				<template #header>
-					<DottedCircleIcon
-						class="icon-larger"
-						style="color: #ffae1f" />
+					<DottedCircleIcon class="icon-larger" />
 				</template>
 				<template #main>
 					<span>Number of seats</span>
 					<strong>{{ customer.seats }}</strong>
 				</template>
 			</Card>
-			<Card style="background-color: #e6fffa">
+			<Card
+				class="color"
+				style="background-color: #e6fffa; color: #30ac8d">
 				<template #header>
-					<CoinsIcon
-						class="icon-larger"
-						style="color: #30ac8d" />
+					<CoinsIcon class="icon-larger" />
 				</template>
 				<template #main>
 					<span>Revenue</span>
 					<strong>{{ formatter.currency(customer.arr) }}</strong>
 				</template>
 			</Card>
-			<Card style="background-color: #e8f7ff">
+			<Card
+				class="color"
+				style="background-color: #e8f7ff; color: #43bcfd">
 				<template #header>
-					<UserIcon
-						class="icon-larger"
-						style="color: #49beff" />
+					<UserIcon class="icon-larger" />
 				</template>
 				<template #main>
 					<span>Created at</span>
@@ -77,6 +113,26 @@ const customer = inject("customer");
 	flex-direction: row;
 	flex-wrap: wrap;
 	gap: 2rem;
+}
+
+.breadcrumbs {
+	display: flex;
+	text-decoration: none;
+	list-style: none;
+	gap: 0.8rem;
+	font-size: 14px;
+
+	.light {
+		a {
+			text-decoration: none;
+			color: var(--font-lighter);
+		}
+	}
+
+	.divider {
+		margin-left: 0.8rem;
+		color: var(--font-lighter);
+	}
 }
 
 .container > .card {

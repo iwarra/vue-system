@@ -1,75 +1,24 @@
 <script setup>
-import { ref, watchEffect, computed } from "vue";
+import { ref, computed } from "vue";
 import { formatter } from "../controller/helperFunctions";
-import Chart from "chart.js/auto";
-import LoadingSpinner from "../components/LoadingSpinner.vue";
+import { useReport } from "../utils/useReport";
+import ReportsViewLoader from "../components/loaders/ReportsViewLoader.vue";
+import ChartComponent from "../components/ChartComponent.vue";
+import BaseButton from "../components/BaseButton.vue";
+import IconWrapper from "../components/IconWrapper.vue";
 import Card from "../components/cards/Card.vue";
 import TwoColumns from "../components/cards/TwoColumns.vue";
 import CurrencyIcon from "../components/icons/CurrencyIcon.vue";
-import BaseButton from "../components/BaseButton.vue";
-import IconWrapper from "../components/IconWrapper.vue";
 import DottedCircleIcon from "../components/icons/DottedCircleIcon.vue";
 import ArrowUpRightIcon from "../components/icons/ArrowUpRightIcon.vue";
-const chartConfig = {
-	type: "bar",
-	data: {
-		labels: [],
-		datasets: [
-			{
-				backgroundColor: "rgb(93, 135, 255)",
-				borderColor: "rgb (0, 0, 0)",
-				data: [],
-			},
-		],
-	},
-	options: {
-		responsive: true,
-		maintainAspectRatio: false,
-		plugins: {
-			legend: {
-				display: false, //hides the labels
-			},
-		},
-		scales: {
-			x: {
-				grid: {
-					display: false, // Hide vertical grid lines on the X-axis
-				},
-			},
-			y: {
-				beginAtZero: true,
-				grid: {
-					display: false, // Hide vertical grid lines on the X-axis
-				},
-			},
-		},
-	},
-};
+import { useUserStore } from "../stores/user";
+const userStore = useUserStore();
+const username = userStore.getUsername;
 
 const reportData = ref(null);
-const chart = ref(null);
 
-const BASE_URL = "https://startdeliver-mock-api.glitch.me";
-fetch(`${BASE_URL}/report`)
-	.then((res) => {
-		if (!res.ok) throw new Error("fetch is not going well");
-		return res.json();
-	})
-	.then((reports) => {
-		const { data } = reports;
-		reportData.value = data;
-
-		//Formatting for chart.js chart
-		data.forEach((item) => {
-			chartConfig.data.labels.push(item.month);
-			chartConfig.data.datasets[0].data.push(item.arr);
-		});
-	});
-
-watchEffect(() => {
-	if (chart.value) {
-		new Chart(chart.value, chartConfig);
-	}
+useReport().then((data) => {
+	reportData.value = data;
 });
 
 const totalRevenue = computed(() => {
@@ -89,7 +38,7 @@ const totalSeats = computed(() => {
 
 <template>
 	<div class="container">
-		<LoadingSpinner v-if="!reportData" />
+		<ReportsViewLoader v-if="!reportData" />
 		<template v-else>
 			<TwoColumns class="welcome">
 				<template #left-col>
@@ -99,12 +48,21 @@ const totalSeats = computed(() => {
 							<span>Here is the latest data available.</span>
 						</template>
 						<template #footer>
-							<BaseButton class="primary">Go to your profile</BaseButton>
+							<BaseButton
+								class="primary"
+								@click="
+									$router.push({
+										name: 'UserView',
+										params: { username },
+									})
+								">
+								Go to your profile
+							</BaseButton>
 						</template>
 					</Card>
 				</template>
 				<template #right-col>
-					<Card class="">
+					<Card>
 						<template #main>
 							<img
 								src="/graph.png"
@@ -126,11 +84,11 @@ const totalSeats = computed(() => {
 						<div class="card-footer">
 							<IconWrapper
 								style="
-									background-color: color-mix(in srgb, #5a929d 15%, white);
+									background-color: color-mix(in srgb, #3facc2 15%, #ffffff5b);
 								">
 								<ArrowUpRightIcon
 									class="icon"
-									style="color: #5a929d"></ArrowUpRightIcon>
+									style="color: #3facc2"></ArrowUpRightIcon>
 							</IconWrapper>
 							<span>+9%</span>
 						</div>
@@ -142,7 +100,7 @@ const totalSeats = computed(() => {
 					<template #header>
 						<img
 							class="icon"
-							src="/orange.png"
+							src="/orange-chart.png"
 							alt="" />
 					</template>
 					<template #main>
@@ -164,9 +122,7 @@ const totalSeats = computed(() => {
 						<strong class="chart-number">{{ metric.value }}</strong>
 					</li>
 				</ul>
-				<div class="chart-container">
-					<canvas ref="chart"></canvas>
-				</div>
+				<ChartComponent />
 			</div>
 
 			<div class="monthly-sales">
@@ -177,7 +133,7 @@ const totalSeats = computed(() => {
 						<template #header>
 							<IconWrapper
 								style="
-									background-color: color-mix(in srgb, #fa9175 15%, white);
+									background-color: color-mix(in srgb, #fa9175 15%, #ffffff5b);
 								">
 								<DottedCircleIcon
 									class="icon"
@@ -198,7 +154,14 @@ const totalSeats = computed(() => {
 						</template>
 						<template #footer>
 							<div class="card-footer">
-								<IconWrapper>
+								<IconWrapper
+									style="
+										background-color: color-mix(
+											in srgb,
+											#64c7ff 15%,
+											#ffffff5b
+										);
+									">
 									<CurrencyIcon
 										style="color: #64c7ff"
 										class="icon" />
@@ -208,9 +171,9 @@ const totalSeats = computed(() => {
 						</template>
 					</Card>
 				</div>
-				<Card class="grow">
+				<!-- <Card class="grow">
 					<template #footer>
-						<!-- <div class="stats">
+						 <div class="stats">
 							<img
 								class="pie-chart"
 								src="/pie-1.svg"
@@ -223,12 +186,12 @@ const totalSeats = computed(() => {
 								class="pie-chart"
 								src="/pie-3.svg"
 								alt="" />
-						</div> -->
+						</div> 
 					</template>
 					<template #main>
 						<h2>Weekly stats</h2>
 					</template>
-				</Card>
+				</Card> -->
 			</div>
 		</template>
 	</div>
@@ -256,6 +219,7 @@ const totalSeats = computed(() => {
 		font-weight: normal;
 	}
 }
+
 .monthly-sales {
 	display: flex;
 	flex-direction: column;
@@ -300,19 +264,6 @@ const totalSeats = computed(() => {
 	display: flex;
 	flex-direction: column;
 	container: chart / inline-size;
-}
-
-.chart-container {
-	flex: 1;
-}
-
-@container chart (max-width: 100vw) {
-	.chart-container {
-		position: relative;
-		height: 280px;
-		width: 100%;
-		margin: 0 auto;
-	}
 }
 
 .chart-info {
