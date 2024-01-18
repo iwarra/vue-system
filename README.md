@@ -1,1 +1,1 @@
-User system developed with Vue3 and Vite. State managed with Pinia. 
+User dashboard developed with Vue3 and styled with CSS. State managed with Pinia. 
