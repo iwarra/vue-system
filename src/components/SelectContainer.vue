@@ -10,6 +10,7 @@
 .select-wrapper {
 	display: flex;
 	align-items: center;
-	gap: .8rem;
+	gap: 0.8rem;
 }
+
 </style>

@@ -25,7 +25,7 @@ const toNumOfRows = ref(null);
 const numOfRowsTotal = computed(() => customers.value.flat().length);
 
 const sortBy = computed(() => {
-	console.log(columnSorted.value.sortingOrder)
+	console.log(columnSorted.value.sortingOrder);
 	return columnSorted.value.sortingOrder === "ascending"
 		? "descending"
 		: "ascending";
@@ -122,13 +122,15 @@ function getCustomers() {
 				<div class="table-heading">
 					<SelectContainer>
 						<label>Items per page:</label>
-						<select
-							v-model="selected"
-							name="itemsPerPage"
-							id="itemsPerPage"
-							@change="getCustomers()">
-							<SelectOptions :options="itemsPerPage" />
-						</select>
+						
+							<select
+								v-model="selected"
+								name="itemsPerPage"
+								id="itemsPerPage"
+								@change="getCustomers()">
+								<SelectOptions :options="itemsPerPage" />
+							</select>
+				
 					</SelectContainer>
 					<input
 						v-model="searchInput"
