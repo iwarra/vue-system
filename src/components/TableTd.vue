@@ -20,7 +20,7 @@ const props = defineProps(["row", "column", "link"]);
 				<strong>
 					<slot></slot>
 				</strong>
-				<ChainIcon class="icon-small"></ChainIcon>
+				<ChainIcon class="link-icon"></ChainIcon>
 			</router-link>
 			<span>Seats: {{ row.seats }}</span>
 		</div>
@@ -39,13 +39,14 @@ const props = defineProps(["row", "column", "link"]);
 	flex-direction: column;
 }
 
+.link-icon {
+	width: 20px;
+	height: 15px;
+	margin-left: 5px;
+}
+
 a {
 	text-decoration: none;
 	color: black;
-
-	svg {
-		margin-left: 5px;
-		padding-top: 2px;
-	}
 }
 </style>

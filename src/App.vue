@@ -49,8 +49,19 @@ onMounted(() => {
 		transition: var(--theme-transition);
 	}
 
+	thead {
+		background-color: var(--primary-light);
+		transition: var(--theme-transition);
+	}
+
 	a {
 		color: black;
+		transition: var(--theme-transition);
+	}
+
+	input,
+	select {
+		transition: var(--theme-transition);
 	}
 }
 .dark-theme {
@@ -70,6 +81,7 @@ onMounted(() => {
 	.heading-card,
 	.welcome {
 		background-color: color-mix(in srgb, #ecf2ff 60%, #253662) !important;
+		transition: var(--theme-transition);
 	}
 
 	.wrapper {
@@ -85,6 +97,7 @@ onMounted(() => {
 
 	a {
 		color: white !important;
+		transition: var(--theme-transition);
 	}
 
 	input[type="password"],
@@ -92,6 +105,7 @@ onMounted(() => {
 	select {
 		background-color: var(--dark-theme-background);
 		color: var(--primary-light);
+		transition: var(--theme-transition);
 	}
 
 	.color {
@@ -100,6 +114,7 @@ onMounted(() => {
 
 	thead {
 		background-color: var(--dark-theme-background) !important;
+		transition: var(--theme-transition);
 	}
 
 	.login-input,
@@ -107,6 +122,7 @@ onMounted(() => {
 	.customers-filter {
 		background-color: var(--primary-dark);
 		color: var(--primary-light);
+		transition: var(--theme-transition);
 	}
 }
 
