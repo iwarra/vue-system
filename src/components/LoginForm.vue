@@ -10,8 +10,6 @@ import CloseIcon from "./icons/CloseIcon.vue";
 const userStore = useUserStore();
 const username = ref("");
 const password = ref("");
-const errorName = ref("");
-const errorPassword = ref("");
 
 const alertVisibility = ref(localStorage.getItem("alert"));
 function handleAlert() {
@@ -19,31 +17,17 @@ function handleAlert() {
 	alertVisibility.value = localStorage.getItem("alert");
 }
 
-function handleSubmit() {
-	if (username.value.trim() === "") {
-		errorName.value = "Name is required.";
-		ref.nameInput.focus();
-		return;
-	}
-	if (password.value.trim() === "") {
-		errorPassword.value = "Password is required.";
-		ref.passwordInput.focus();
-		return;
-	}
+function autofill() {
+	username.value = "ivona";
+	password.value = "password";
+}
 
-	const user = {
-		username: username.value,
-		password: password.value,
-	};
+function handleSubmit() {
+	const user = username.value;
 
 	userStore.setLogIn(true);
-	userStore.setCurrentUser(user.username);
-	localStorage.setItem("user", JSON.stringify(user));
-
-	username.value = "";
-	password.value = "";
-	errorName.value = "";
-	errorPassword.value = "";
+	userStore.setCurrentUser(user);
+	localStorage.setItem("user", user);
 }
 </script>
 
@@ -52,7 +36,17 @@ function handleSubmit() {
 		<div
 			class="alert-message"
 			v-if="!alertVisibility">
-			<span>Enter any value to log in</span>
+			<div class="message">
+				<BaseButton
+					class="primary bold"
+					@click="autofill"
+					>Autofill credentials</BaseButton
+				>
+				<span
+					>Username: <strong>ivona</strong> | Password:
+					<strong>password</strong>
+				</span>
+			</div>
 			<CloseIcon
 				@click="handleAlert"
 				class="icon-smaller closeBtn"></CloseIcon>
@@ -77,6 +71,7 @@ function handleSubmit() {
 					<span>or sign in with</span>
 				</div>
 				<form
+					autocomplete="off"
 					class="login-form"
 					@submit.prevent="handleSubmit">
 					<div class="name-group">
@@ -86,15 +81,16 @@ function handleSubmit() {
 							>Username:</label
 						>
 						<input
+							required
+							pattern="ivona"
 							type="text"
 							id="name"
 							v-model="username"
-							ref="nameInput"
 							class="login-input" />
 						<span
-							v-if="errorName"
+							v-if="error"
 							class="login-error">
-							{{ errorName }}
+							{{ error }}
 						</span>
 					</div>
 					<div class="password-group">
@@ -104,15 +100,16 @@ function handleSubmit() {
 							>Password:</label
 						>
 						<input
+							required
+							pattern="password"
 							id="password"
 							type="password"
 							v-model="password"
-							ref="passwordInput"
 							class="login-input" />
 						<span
-							v-if="errorPassword"
+							v-if="error"
 							class="login-error">
-							{{ errorPassword }}
+							{{ error }}
 						</span>
 					</div>
 					<div class="style-wrapper">
@@ -137,11 +134,19 @@ function handleSubmit() {
 </template>
 
 <style scoped>
+/* input:invalid {
+	outline: 1px solid red;
+} */
+.container {
+	display: flex;
+	flex-direction: column;
+	min-height: 100svh;
+}
+
 .center {
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	container: wrapper/inline-size;
 	background-color: #f0f2fd;
 	background: radial-gradient(
 			rgb(210, 241, 223),
@@ -149,7 +154,7 @@ function handleSubmit() {
 			rgb(186, 216, 244)
 		)
 		0% 0%/400% 400%;
-	min-height: 100svh;
+	flex: 1;
 }
 
 .login-wrapper {
@@ -242,65 +247,67 @@ function handleSubmit() {
 	width: 100%;
 	font-size: 0.9rem;
 
-	label {
-		font-weight: 600;
-	}
-
-	input[type="text"], input[type="password"] {
-		width: 100%;
-		padding-inline: 10px;
-	}
-
-	input[type="checkbox"] {
-		appearance: none;
-		-webkit-appearance: none;
-		display: flex;
-		align-content: center;
-		justify-content: center;
-		height: 19px;
-		width: 19px;
-		border: 0.1rem solid #dee2e7;
-		border-radius: 3px;
-	}
-
-	input[type="checkbox"]::before {
-		content: "";
-		width: 1rem;
-		height: 1rem;
-		clip-path: polygon(
-			20% 0%,
-			0% 20%,
-			30% 50%,
-			0% 80%,
-			20% 100%,
-			50% 70%,
-			80% 100%,
-			100% 80%,
-			70% 50%,
-			100% 20%,
-			80% 0%,
-			50% 30%
-		);
-		transform: scale(0);
-		background-color: var(--primary-accent);
-	}
-
-	input[type="checkbox"]:checked::before {
-		transform: scale(1);
-	}
-
-	.name-group,
-	.password-group {
-		display: flex;
-		flex-direction: column;
-		gap: 0.7rem;
-	}
-
 	.login-error {
 		text-align: end;
 		color: #fa896b;
 	}
 }
+
+.login-label {
+	font-weight: 600;
+}
+
+input[type="text"],
+input[type="password"] {
+	width: 100%;
+	padding-inline: 10px;
+}
+
+input[type="checkbox"] {
+	appearance: none;
+	-webkit-appearance: none;
+	display: flex;
+	align-content: center;
+	justify-content: center;
+	height: 19px;
+	width: 19px;
+	border: 0.1rem solid #dee2e7;
+	border-radius: 3px;
+}
+
+input[type="checkbox"]::before {
+	content: "";
+	width: 1rem;
+	height: 1rem;
+	clip-path: polygon(
+		20% 0%,
+		0% 20%,
+		30% 50%,
+		0% 80%,
+		20% 100%,
+		50% 70%,
+		80% 100%,
+		100% 80%,
+		70% 50%,
+		100% 20%,
+		80% 0%,
+		50% 30%
+	);
+	transform: scale(0);
+	background-color: var(--primary-accent);
+}
+
+input[type="checkbox"]:checked::before {
+	transform: scale(1);
+}
+
+.name-group,
+.password-group {
+	display: flex;
+	flex-direction: column;
+	gap: 0.7rem;
+}
+
 .style-wrapper {
 	display: flex;
 	flex-flow: row wrap;
@@ -319,22 +326,29 @@ function handleSubmit() {
 }
 
 .alert-message {
-	text-align: center;
 	background-color: #fa896b;
 	color: white;
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
 	gap: 1rem;
-	padding-inline: 1rem;
-	padding-block: 0.5rem;
+	padding-inline: 1.5rem;
+	padding-block: 0.8rem;
+
+}
+.message {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 1rem;
 }
 
 .closeBtn {
 	cursor: pointer;
+	flex-shrink: 0;
 }
 
-@container wrapper (max-width: 480px) {
+@media (max-width: 553px) {
 	.secondary {
 		width: 100%;
 	}
@@ -342,6 +356,15 @@ function handleSubmit() {
 	.separator::before,
 	.separator::after {
 		width: 20%;
+	}
+
+	.message {
+		span {
+			order: 1;
+		}
+		button {
+			order: 2;
+		}
 	}
 }
 </style>

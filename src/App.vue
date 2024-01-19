@@ -11,13 +11,13 @@ const userStore = useUserStore();
 function autoLogin(user) {
 	// If the user exists in local storage on create, update the user store info
 	userStore.setLogIn(true);
-	userStore.setCurrentUser(user.username);
+	userStore.setCurrentUser(user);
 }
 
 onMounted(() => {
 	const user = localStorage.getItem("user");
 	if (user) {
-		autoLogin(JSON.parse(user));
+		autoLogin(user);
 	}
 });
 </script>
@@ -36,8 +36,8 @@ onMounted(() => {
 
 <style>
 .light-theme {
-	min-height: 100vh;
 	min-height: -webkit-fill-available;
+	min-height: 100vh;
 	background-color: var(--primary-light);
 	color: var(--font-dark);
 	display: flex;
@@ -54,17 +54,13 @@ onMounted(() => {
 	}
 }
 .dark-theme {
-	min-height: 100vh;
 	min-height: -webkit-fill-available;
+	min-height: 100vh;
 	background-color: var(--dark-theme-background);
 	color: var(--primary-light);
 	display: flex;
 	flex-direction: column;
 	transition: var(--theme-transition);
-
-	.header-wrapper {
-		box-shadow: rgba(225, 224, 224, 0.12) 0px 4px 10px;
-	}
 
 	.header-content {
 		background-color: var(--dark-theme-background);
@@ -79,7 +75,8 @@ onMounted(() => {
 	.wrapper {
 		background-color: var(--dark-theme-background);
 		color: var(--primary-light);
-		box-shadow: 0 5px 5px -3px #0003,0 8px 10px 1px #00000024,0 3px 14px 2px #0000001f;
+		box-shadow: 0 5px 5px -3px #0003, 0 8px 10px 1px #00000024,
+			0 3px 14px 2px #0000001f;
 	}
 
 	.secondary {

@@ -10,14 +10,13 @@ import ListIcon from "../components/icons/ListIcon.vue";
 import MailIcon from "../components/icons/MailIcon.vue";
 
 const emit = defineEmits(["close"]);
-const themeStore = useThemesStore();
 const userStore = useUserStore();
 const username = userStore.getUsername;
 
 function handleLogOut() {
 	userStore.resetUsername();
 	userStore.setLogIn(false);
-	localStorage.removeItem("user");
+	localStorage.clear();
 	emit("close");
 }
 
@@ -47,10 +46,10 @@ onUnmounted(() => {
 				alt="user avatar" />
 			<div class="user-info">
 				<span class="bold">{{ userStore.username }}</span>
-				<span class="user-title">Web developer</span>
+				<span class="user-title">Software engineer</span>
 				<div class="user-mail">
 					<MailIcon></MailIcon>
-					<span>{{ userStore.username }}@company.com</span>
+					<span>{{ userStore.username }}@dash.com</span>
 				</div>
 			</div>
 		</div>
