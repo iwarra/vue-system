@@ -76,7 +76,7 @@ const username = userStore.getUsername;
 		<div class="account-info">
 			<Card
 				class="color"
-				style="background-color: #ecf2ff; color: #9b99fe">
+				style="background-color: #ecf2ffd9; color: #8f8dff">
 				<template #header>
 					<DottedCircleIcon class="icon-larger" />
 				</template>
@@ -87,7 +87,7 @@ const username = userStore.getUsername;
 			</Card>
 			<Card
 				class="color"
-				style="background-color: #fef5e5; color: #ffae1f">
+				style="background-color: #fef5e5df; color: #feab1b">
 				<template #header>
 					<CoinsIcon class="icon-larger" />
 				</template>
@@ -98,7 +98,7 @@ const username = userStore.getUsername;
 			</Card>
 			<Card
 				class="color"
-				style="background-color: #e8f7ff; color: #43bcfd">
+				style="background-color: #e8f7ffd3; color: #2eb3fa">
 				<template #header>
 					<UserIcon class="icon-larger" />
 				</template>

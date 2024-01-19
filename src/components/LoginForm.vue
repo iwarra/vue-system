@@ -326,7 +326,7 @@ input[type="checkbox"]:checked::before {
 }
 
 .alert-message {
-	background-color: #fa896b;
+	background-color: #fc8361f7;
 	color: white;
 	display: flex;
 	align-items: center;

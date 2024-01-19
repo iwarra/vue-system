@@ -70,7 +70,7 @@ const customerName = breadcrumbs.at(-1);
 		<div class="customer-info">
 			<Card
 				class="color"
-				style="background-color: #fef5e5; color: #ffae1f">
+				style="background-color: #fef5e5df; color: #feab1b">
 				<template #header>
 					<DottedCircleIcon class="icon-larger" />
 				</template>
@@ -81,7 +81,7 @@ const customerName = breadcrumbs.at(-1);
 			</Card>
 			<Card
 				class="color"
-				style="background-color: #e6fffa; color: #30ac8d">
+				style="background-color: #e6fffada; color: #30ac8d">
 				<template #header>
 					<CoinsIcon class="icon-larger" />
 				</template>
@@ -92,7 +92,7 @@ const customerName = breadcrumbs.at(-1);
 			</Card>
 			<Card
 				class="color"
-				style="background-color: #e8f7ff; color: #43bcfd">
+				style="background-color: #e8f7ffd3; color: #2eb3fa">
 				<template #header>
 					<UserIcon class="icon-larger" />
 				</template>
